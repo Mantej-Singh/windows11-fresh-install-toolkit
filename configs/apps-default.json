@@ -1,0 +1,227 @@
+{
+  "version": "1.0.0",
+  "name": "Default Profile",
+  "description": "Standard installation with 19 essential apps and Windows tweaks",
+  "lastUpdated": "2025-01-10",
+  
+  "apps": {
+    "winget": [
+      {
+        "id": "OpenWhisperSystems.Signal",
+        "name": "Signal",
+        "category": "Communication",
+        "description": "Private messaging app",
+        "required": true
+      },
+      {
+        "id": "Ditto.Ditto",
+        "name": "Ditto",
+        "category": "Productivity",
+        "description": "Advanced clipboard manager",
+        "required": true
+      },
+      {
+        "id": "Spotify.Spotify",
+        "name": "Spotify",
+        "category": "Media",
+        "description": "Music streaming service",
+        "required": false
+      },
+      {
+        "id": "MatthewMalensek.3RVX",
+        "name": "3RVX",
+        "category": "Customization",
+        "description": "Volume OSD display",
+        "required": false
+      },
+      {
+        "id": "Microsoft.PowerToys",
+        "name": "PowerToys",
+        "category": "Productivity",
+        "description": "Windows power user utilities",
+        "required": true
+      },
+      {
+        "id": "ClockworkMod.UniversalADBDriver",
+        "name": "Universal ADB Driver",
+        "category": "Development",
+        "description": "Android ADB drivers",
+        "required": false
+      },
+      {
+        "id": "PDFgear.PDFgear",
+        "name": "PDFgear",
+        "category": "Productivity",
+        "description": "PDF reader and editor",
+        "required": false
+      },
+      {
+        "id": "Valve.Steam",
+        "name": "Steam",
+        "category": "Gaming",
+        "description": "Gaming platform",
+        "required": false
+      },
+      {
+        "id": "Tonec.InternetDownloadManager",
+        "name": "Internet Download Manager",
+        "category": "Utilities",
+        "description": "Download accelerator",
+        "required": false
+      },
+      {
+        "id": "Windscribe.Windscribe",
+        "name": "Windscribe VPN",
+        "category": "Security",
+        "description": "VPN service",
+        "required": false
+      },
+      {
+        "id": "Discord.Discord",
+        "name": "Discord",
+        "category": "Communication",
+        "description": "Voice and text chat",
+        "required": false
+      },
+      {
+        "id": "JAMSoftware.TreeSize.Free",
+        "name": "TreeSize Free",
+        "category": "Utilities",
+        "description": "Disk space analyzer",
+        "required": false
+      },
+      {
+        "id": "flux.flux",
+        "name": "f.lux",
+        "category": "Utilities",
+        "description": "Blue light filter",
+        "required": false
+      },
+      {
+        "id": "Google.GoogleDrive",
+        "name": "Google Drive",
+        "category": "Cloud",
+        "description": "Cloud storage",
+        "required": false
+      },
+      {
+        "id": "Google.ChromeRemoteDesktopHost",
+        "name": "Chrome Remote Desktop",
+        "category": "Remote",
+        "description": "Remote desktop access",
+        "required": false
+      },
+      {
+        "id": "Rem0o.FanControl",
+        "name": "FanControl",
+        "category": "Utilities",
+        "description": "System fan controller",
+        "required": false
+      },
+      {
+        "id": "qBittorrent.qBittorrent",
+        "name": "qBittorrent",
+        "category": "Utilities",
+        "description": "BitTorrent client",
+        "required": false
+      },
+      {
+        "id": "Microsoft.VisualStudioCode",
+        "name": "Visual Studio Code",
+        "category": "Development",
+        "description": "Code editor",
+        "required": true
+      },
+      {
+        "id": "VideoLAN.VLC",
+        "name": "VLC Media Player",
+        "category": "Media",
+        "description": "Universal media player",
+        "required": true
+      }
+    ],
+    
+    "manual": [
+      {
+        "name": "ADB Platform Tools",
+        "category": "Development",
+        "description": "Android debugging tools",
+        "downloadUrl": "https://dl.google.com/android/repository/platform-tools-latest-windows.zip",
+        "installPath": "C:\\Tweeks\\Android\\platform-tools",
+        "addToPath": true,
+        "type": "zip"
+      },
+      {
+        "name": "FlipIt Screensaver",
+        "category": "Customization",
+        "description": "Flip clock screensaver",
+        "downloadUrl": "https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolkit/main/assets/FlipIt.scr",
+        "installPath": "C:\\Windows\\SysWOW64\\",
+        "type": "screensaver",
+        "configTool": {
+          "url": "https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolkit/main/assets/FlipIt-1.3.7z",
+          "extractPath": "C:\\Tweeks\\FlipIt screensaver"
+        }
+      }
+    ]
+  },
+  
+  "windowsTweaks": {
+    "fileExplorer": {
+      "enabled": true,
+      "settings": {
+        "openToThisPC": true,
+        "showFileExtensions": true,
+        "showHiddenFiles": true,
+        "showSystemFiles": true,
+        "showDriveLetters": true,
+        "showEncryptedCompressedColor": true,
+        "showPopupDescriptions": true,
+        "disableRecentFiles": true,
+        "disableFrequentFolders": true
+      }
+    },
+    
+    "taskbar": {
+      "enabled": true,
+      "settings": {
+        "removeSearchBox": true,
+        "removeWidgets": true,
+        "removeChatButton": true,
+        "enableEndTask": true,
+        "alignment": "center"
+      }
+    },
+    
+    "privacy": {
+      "enabled": true,
+      "settings": {
+        "disableCortana": true,
+        "disableWebSearch": true
+      }
+    },
+    
+    "appearance": {
+      "enabled": true,
+      "settings": {
+        "enableDarkMode": true,
+        "darkModeApps": true,
+        "darkModeSystem": true
+      }
+    }
+  },
+  
+  "systemSettings": {
+    "createRestorePoint": true,
+    "restartExplorer": true,
+    "generateLog": true
+  },
+  
+  "metadata": {
+    "author": "Mantej Singh Dhanjal",
+    "github": "https://github.com/Mantej-Singh/windows11-fresh-install-toolkit",
+    "license": "MIT",
+    "minimumWindowsVersion": "10.0.22000",
+    "powershellVersion": "5.1"
+  }
+}
