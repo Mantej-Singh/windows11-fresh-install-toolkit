@@ -194,7 +194,7 @@ Always create backups before running system modifications. Test in a VM if unsur
 
 ---
 
-**Created by:** Mantej Singh Dhanjal 
+**Created by:** Me, over a weekend bc of below reasons 
 
 **Motivation:** Two Samsung 980 Pro SSD failures in a row 💀 and [ThioJoe/Windows-Sandbox-Tools](https://github.com/ThioJoe/Windows-Sandbox-Tools )
 
