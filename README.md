@@ -114,6 +114,7 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 ## 🗺️ Roadmap
 
 - [x] Custom app profiles (minimal, developer, defualt(My favorites))
+- [ ] add winget from [ThioJoe Script](https://github.com/ThioJoe/Windows-Sandbox-Tools/tree/main/Installer%20Scripts)
 - [ ] Backup current settings before changes
 - [ ] Undo/Rollback functionality  
 - [ ] GUI version
@@ -159,6 +160,6 @@ Always create backups before running system modifications. Test in a VM if unsur
 
 **Created by:** Mantej Singh Dhanjal 
 
-**Motivation:** Two Samsung 980 Pro SSD failures in a row 💀
+**Motivation:** Two Samsung 980 Pro SSD failures in a row 💀 and [ThioJoe/Windows-Sandbox-Tools](https://github.com/ThioJoe/Windows-Sandbox-Tools )
 
 **Assistance:** ChatGPT5 for troubleshooting. Claude Opus 4.1 for technical guidance, grammar check, and editing.
