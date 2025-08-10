@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "name": "Minimal Profile",
+  "description": "Essential apps only - lightweight installation",
+  "apps": {
+    "winget": [
+      {
+        "id": "Microsoft.VisualStudioCode",
+        "name": "Visual Studio Code",
+        "required": true
+      },
+      {
+        "id": "VideoLAN.VLC",
+        "name": "VLC Media Player",
+        "required": true
+      },
+      {
+        "id": "Microsoft.PowerToys",
+        "name": "PowerToys",
+        "required": true
+      },
+      {
+        "id": "Google.GoogleDrive",
+        "name": "Google Drive",
+        "required": false
+      }
+    ]
+  }
+}
