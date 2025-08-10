@@ -103,7 +103,12 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 ```
 
 ## 📦 Windows Sandbox Testing
+
+### Before Installation
 <img width="987" height="1375" alt="image" src="https://github.com/user-attachments/assets/df9420b4-809f-4c4e-b2af-635c72bcdda1" />
+
+### After Installation
+<img width="993" height="1372" alt="image" src="https://github.com/user-attachments/assets/cd21ed03-bde9-4507-8919-6b68be7fb667" />
 
 
 ## 🗺️ Roadmap
