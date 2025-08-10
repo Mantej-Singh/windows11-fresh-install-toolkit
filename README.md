@@ -88,7 +88,7 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 
 ## 🗺️ Roadmap
 
-- [ ] Custom app profiles (minimal, developer, gamer)
+- [x] Custom app profiles (minimal, developer, defualt(My favorites))
 - [ ] Backup current settings before changes
 - [ ] Undo/Rollback functionality  
 - [ ] GUI version
@@ -100,6 +100,21 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 - **FlipIt Screensaver** - [phaselden/FlipIt](https://github.com/phaselden/FlipIt) (CC0-1.0 License)
 - **ADB Platform Tools** - [Google](https://developer.android.com/tools/releases/platform-tools)
 - Inspired by frustration with Samsung 980 Pro SSD failures 😅
+
+## Attribution
+
+### FlipIt Screensaver
+- **Original Author:** Phil Haselden (phaselden)
+- **Source:** https://github.com/phaselden/FlipIt
+- **License:** CC0-1.0 (Public Domain)
+- **Version:** 1.3
+- **Modifications:** None - Using original release
+
+The FlipIt screensaver is included in this toolkit for user convenience. 
+Full credit goes to the original author.
+
+Only change I made to this is, I added my own city, Mumbai 💕
+
 
 ## 📄 License
 
