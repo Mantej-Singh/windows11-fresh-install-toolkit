@@ -141,6 +141,10 @@ Only change I made to this is, I added my own city, Mumbai 💕
 MIT License - See [LICENSE](LICENSE) file
 
 
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/Mantej-Singh/windows11-fresh-install-toolkit/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Mantej-Singh/windows11-fresh-install-toolkit/discussions)
 
 ## ⚠️ Disclaimer
 
