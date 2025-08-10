@@ -86,6 +86,22 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 .\Install-Windows11-Toolkit.ps1 -DryRun
 ```
 
+### Usage Examples for Users:
+
+```powershell
+# See available profiles
+.\Install-Windows11-Toolkit.ps1 -ListProfiles
+
+# Use minimal profile (fewer apps)
+.\Install-Windows11-Toolkit.ps1 -Profile minimal
+
+# Use developer profile (dev tools)
+.\Install-Windows11-Toolkit.ps1 -Profile developer
+
+# Use custom configuration
+.\Install-Windows11-Toolkit.ps1 -Profile custom -CustomConfigUrl "https://mysite.com/config.json"
+```
+
 ## 🗺️ Roadmap
 
 - [x] Custom app profiles (minimal, developer, defualt(My favorites))
