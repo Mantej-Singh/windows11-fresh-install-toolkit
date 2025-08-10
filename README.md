@@ -102,6 +102,10 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 .\Install-Windows11-Toolkit.ps1 -Profile custom -CustomConfigUrl "https://mysite.com/config.json"
 ```
 
+## 📦 Windows Sandbox Testing
+<img width="987" height="1375" alt="image" src="https://github.com/user-attachments/assets/df9420b4-809f-4c4e-b2af-635c72bcdda1" />
+
+
 ## 🗺️ Roadmap
 
 - [x] Custom app profiles (minimal, developer, defualt(My favorites))
