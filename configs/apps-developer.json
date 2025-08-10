@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "name": "Developer Profile",
+  "description": "Development tools and utilities",
+  "apps": {
+    "winget": [
+      {
+        "id": "Microsoft.VisualStudioCode",
+        "name": "Visual Studio Code",
+        "required": true
+      },
+      {
+        "id": "Git.Git",
+        "name": "Git",
+        "required": true
+      },
+      {
+        "id": "Microsoft.WindowsTerminal",
+        "name": "Windows Terminal",
+        "required": true
+      },
+      {
+        "id": "Python.Python.3.12",
+        "name": "Python",
+        "required": true
+      },
+      {
+        "id": "OpenJS.NodeJS",
+        "name": "Node.js",
+        "required": true
+      },
+      {
+        "id": "Docker.DockerDesktop",
+        "name": "Docker Desktop",
+        "required": false
+      }
+    ]
+  }
+}
