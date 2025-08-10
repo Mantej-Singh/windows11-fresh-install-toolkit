@@ -101,6 +101,41 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 # Use custom configuration
 .\Install-Windows11-Toolkit.ps1 -Profile custom -CustomConfigUrl "https://mysite.com/config.json"
 ```
+## 🧪 Testing in Windows Sandbox
+### Prerequisites for Sandbox Testing
+
+Windows Sandbox doesn't include Microsoft Store or Winget by default. Thanks to [**ThioJoe**](https://github.com/ThioJoe) for creating scripts that enable these features in Sandbox without using any third-party APIs!
+
+Before testing this toolkit in Windows Sandbox, you need to:
+
+1. **Install Winget and Microsoft Store** using ThioJoe's scripts:
+   - [Install-Winget.ps1](https://github.com/ThioJoe/Windows-Sandbox-Tools/blob/main/Installer%20Scripts/Install-Winget.ps1)
+   - [Install-Microsoft-Store.ps1](https://github.com/ThioJoe/Windows-Sandbox-Tools/blob/main/Installer%20Scripts/Install-Microsoft-Store.ps1)
+
+2. **Watch this helpful tutorial**: [Windows Sandbox Setup Guide](https://www.youtube.com/watch?v=510O-FkGv6U)
+
+### Quick Sandbox Setup
+
+```powershell
+# Step 1: Enable Windows Sandbox (if not already enabled)
+Enable-WindowsOptionalFeature -FeatureName "Containers-DisposableClientVM" -All -Online
+
+# Step 2: In Windows Sandbox, run as Administrator:
+# Install Winget first
+irm https://raw.githubusercontent.com/ThioJoe/Windows-Sandbox-Tools/main/Installer%20Scripts/Install-Winget.ps1 | iex
+
+# Step 3: Install Microsoft Store (optional, but recommended)
+irm https://raw.githubusercontent.com/ThioJoe/Windows-Sandbox-Tools/main/Installer%20Scripts/Install-Microsoft-Store.ps1 | iex
+
+# Step 4: Now run the Windows 11 Fresh Install Toolkit
+irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolkit/main/Install-Windows11-Toolkit.ps1 | iex
+```
+### Notes for Sandbox Testing
+
+- ⚠️ **Sandbox limitations**: Some features may not work exactly as in a full Windows installation
+- 💾 **No persistence**: All changes are lost when you close the Sandbox
+- 🔄 **Perfect for testing**: Test the script safely without affecting your main system
+- ⏱️ **Installation time**: First-time setup may take 5-10 minutes for Winget installation
 
 ## 📦 Windows Sandbox Testing
 
@@ -124,6 +159,7 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 ## 🙏 Credits & Attribution
 
 - **FlipIt Screensaver** - [phaselden/FlipIt](https://github.com/phaselden/FlipIt) (CC0-1.0 License)
+- **Windows Sandbox Tools** - [ThioJoe/Windows-Sandbox-Tools](https://github.com/ThioJoe/Windows-Sandbox-Tools) (MIT License)
 - **ADB Platform Tools** - [Google](https://developer.android.com/tools/releases/platform-tools)
 - Inspired by frustration with Samsung 980 Pro SSD failures 😅
 
