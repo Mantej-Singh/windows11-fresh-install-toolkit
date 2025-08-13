@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "name": "Default Profile",
   "description": "Standard installation with 19 essential apps and Windows tweaks",
-  "lastUpdated": "2025-01-10",
+  "lastUpdated": "2025-08-13",
   
   "apps": {
     "winget": [
@@ -207,6 +207,21 @@
         "enableDarkMode": true,
         "darkModeApps": true,
         "darkModeSystem": true
+      }
+    },
+    
+    "powerManagement": {
+      "enabled": true,
+      "settings": {
+        "disableHibernation": true,
+        "powerMode": "highPerformance",
+        "pluggedInSettings": {
+          "displayTimeout": 60,
+          "sleepTimeout": 0,
+          "hibernateTimeout": 0
+        },
+        "energySaver": false,
+        "desktopOnly": true
       }
     }
   },

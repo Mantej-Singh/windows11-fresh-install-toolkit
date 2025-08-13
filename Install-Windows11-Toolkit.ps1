@@ -347,6 +347,91 @@ if (-not $SkipWindowsTweaks -and $script:Config.windowsTweaks) {
             Write-Host "    ✅ Privacy settings configured" -ForegroundColor Green
         }
         
+        # Power Management Settings
+        if ($script:Config.windowsTweaks.powerManagement -and $script:Config.windowsTweaks.powerManagement.enabled) {
+            Write-Host "  Configuring Power Management..." -ForegroundColor Yellow
+            $powerSettings = $script:Config.windowsTweaks.powerManagement.settings
+            
+            # Detect system type (desktop vs laptop)
+            $isDesktop = $true
+            if ($powerSettings.desktopOnly) {
+                try {
+                    $chassis = (Get-WmiObject -Class Win32_SystemEnclosure).ChassisTypes
+                    # Chassis types: 8,9,10,14 = Laptop/Portable, 3,4,5,6,7,15,16 = Desktop/Tower
+                    $laptopTypes = @(8, 9, 10, 14, 30, 31)
+                    $isDesktop = -not ($chassis | Where-Object { $_ -in $laptopTypes })
+                    
+                    if (-not $isDesktop) {
+                        Write-Host "    ⏭️ Laptop detected - skipping desktop-only power settings" -ForegroundColor Cyan
+                    }
+                } catch {
+                    Write-Host "    ⚠️ Could not detect system type - applying settings anyway" -ForegroundColor Yellow
+                }
+            }
+            
+            if ($isDesktop -or -not $powerSettings.desktopOnly) {
+                # Disable hibernation
+                if ($powerSettings.disableHibernation) {
+                    try {
+                        & powercfg /hibernate off
+                        Write-Host "    ✅ Hibernation disabled" -ForegroundColor Green
+                    } catch {
+                        Write-Host "    ⚠️ Failed to disable hibernation" -ForegroundColor Yellow
+                    }
+                }
+                
+                # Set High Performance power plan
+                if ($powerSettings.powerMode -eq "highPerformance") {
+                    try {
+                        # High performance GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
+                        & powercfg /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
+                        Write-Host "    ✅ High Performance power plan activated" -ForegroundColor Green
+                    } catch {
+                        Write-Host "    ⚠️ Failed to set High Performance plan" -ForegroundColor Yellow
+                    }
+                }
+                
+                # Configure plugged-in power settings
+                if ($powerSettings.pluggedInSettings) {
+                    $pluggedSettings = $powerSettings.pluggedInSettings
+                    
+                    try {
+                        # Set display timeout (convert minutes to minutes for powercfg)
+                        if ($pluggedSettings.displayTimeout -gt 0) {
+                            & powercfg /change monitor-timeout-ac $pluggedSettings.displayTimeout
+                            Write-Host "    ✅ Display timeout set to $($pluggedSettings.displayTimeout) minutes" -ForegroundColor Green
+                        }
+                        
+                        # Set sleep timeout (0 = never)
+                        if ($pluggedSettings.sleepTimeout -eq 0) {
+                            & powercfg /change standby-timeout-ac 0
+                            Write-Host "    ✅ Sleep timeout disabled" -ForegroundColor Green
+                        }
+                        
+                        # Set hibernate timeout (0 = never)
+                        if ($pluggedSettings.hibernateTimeout -eq 0) {
+                            & powercfg /change hibernate-timeout-ac 0
+                            Write-Host "    ✅ Hibernate timeout disabled" -ForegroundColor Green
+                        }
+                    } catch {
+                        Write-Host "    ⚠️ Some power timeout settings may have failed" -ForegroundColor Yellow
+                    }
+                }
+                
+                # Disable Energy Saver (Registry setting for Windows 11)
+                if (-not $powerSettings.energySaver) {
+                    try {
+                        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" -Name "ShowBatteryFlyout" -Value 0 -Type DWord -ErrorAction SilentlyContinue
+                        Write-Host "    ✅ Energy Saver configuration applied" -ForegroundColor Green
+                    } catch {
+                        Write-Host "    ⚠️ Energy Saver setting may not have applied" -ForegroundColor Yellow
+                    }
+                }
+            }
+            
+            Write-Host "    ✅ Power management configured" -ForegroundColor Green
+        }
+        
         # Restart Explorer if needed
         if ($script:Config.systemSettings.restartExplorer) {
             Write-Host "  Restarting Explorer..." -ForegroundColor Yellow
@@ -394,6 +479,9 @@ if (-not $SkipWindowsTweaks) {
     Write-Host "  • Taskbar: Customized ✅" -ForegroundColor Green
     Write-Host "  • Dark Mode: Enabled ✅" -ForegroundColor Green
     Write-Host "  • Privacy: Enhanced ✅" -ForegroundColor Green
+    if ($script:Config.windowsTweaks.powerManagement -and $script:Config.windowsTweaks.powerManagement.enabled) {
+        Write-Host "  • Power Management: Optimized ✅" -ForegroundColor Green
+    }
 }
 
 # Cleanup

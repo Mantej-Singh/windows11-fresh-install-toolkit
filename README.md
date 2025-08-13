@@ -15,6 +15,7 @@ A comprehensive PowerShell automation toolkit for Windows 11 fresh installations
 - ⚙️ **System Configuration** - File Explorer, Taskbar, Dark Mode
 - 🔒 **Privacy Tweaks** - Disable Cortana and telemetry
 - 🛠️ **Developer Tools** - ADB setup with PATH configuration
+- ⚡ **Power Optimization** - High performance mode for desktops
 - 💾 **System Restore Point** - Creates backup before changes
 
 
@@ -57,6 +58,12 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 - ✅ Enable "End Task" in taskbar context menu
 - ✅ Disable Cortana and web search
 - ✅ Configure ADB Platform Tools PATH
+- ✅ **Power Management Optimization** (Desktop only)
+  - Disable hibernation system-wide
+  - Switch to High Performance power plan
+  - Set display timeout to 1 hour
+  - Disable sleep and hibernation timeouts
+  - Optimize Energy Saver settings
 
 [Full tweaks list →](docs/TWEAKS.md)
 
@@ -198,4 +205,4 @@ Always create backups before running system modifications. Test in a VM if unsur
 
 **Motivation:** Two Samsung 980 Pro SSD failures in a row 💀 and [ThioJoe/Windows-Sandbox-Tools](https://github.com/ThioJoe/Windows-Sandbox-Tools )
 
-**Assistance:** ChatGPT5 for troubleshooting. Claude Opus 4.1 for technical guidance, grammar check, and editing.
+**Assistance:** ChatGPT5 for troubleshooting. Claude Opus 4.1 for technical guidance, grammar check, and editing. [Claude Code](https://claude.ai/code) for code-related queries, improvements, and PR assistance.

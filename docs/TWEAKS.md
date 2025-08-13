@@ -8,6 +8,7 @@ This document details all Windows 11 configuration changes made by the toolkit.
 - [Taskbar Configuration](#taskbar-configuration)
 - [Privacy Settings](#privacy-settings)
 - [Appearance Settings](#appearance-settings)
+- [Power Management Settings](#power-management-settings)
 - [Registry Changes](#registry-changes)
 - [How to Revert](#how-to-revert)
 - [Manual Tweaks](#manual-tweaks)
@@ -163,6 +164,66 @@ The toolkit applies carefully selected Windows 11 tweaks to improve productivity
 
 ---
 
+## Power Management Settings
+
+**🖥️ Desktop Systems Only** - These settings are automatically skipped on laptops to preserve battery life.
+
+### System Type Detection
+- **Method**: WMI query for `Win32_SystemEnclosure.ChassisTypes`
+- **Desktop Types**: 3, 4, 5, 6, 7, 15, 16 (Tower, Desktop, Mini Tower, etc.)
+- **Laptop Types**: 8, 9, 10, 14, 30, 31 (Portable, Laptop, Notebook, etc.)
+- **Fallback**: If detection fails, settings are applied anyway
+
+### Disable Hibernation
+- **Command**: `powercfg /hibernate off`
+- **Effect**: Disables hibernation system-wide and frees up hiberfil.sys disk space
+- **Typical Space Saved**: 4-32GB depending on RAM size
+- **Revert**: `powercfg /hibernate on`
+
+### High Performance Power Plan
+- **Command**: `powercfg /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c`
+- **Effect**: Switches to Windows built-in High Performance plan
+- **Benefits**: Maximum CPU performance, no CPU throttling
+- **Trade-off**: Higher power consumption (ideal for desktops)
+
+### Display Timeout (Plugged In)
+- **Setting**: 60 minutes
+- **Command**: `powercfg /change monitor-timeout-ac 60`
+- **Default**: Typically 10-15 minutes
+- **Effect**: Screen stays on longer during work sessions
+
+### Sleep Timeout (Plugged In)
+- **Setting**: Never (0)
+- **Command**: `powercfg /change standby-timeout-ac 0`
+- **Default**: Typically 30 minutes
+- **Effect**: System never goes to sleep when plugged in
+- **Benefits**: No interruption during long tasks, downloads, or builds
+
+### Hibernate Timeout (Plugged In)
+- **Setting**: Never (0)
+- **Command**: `powercfg /change hibernate-timeout-ac 0`
+- **Default**: Typically 3 hours
+- **Effect**: System never hibernates automatically
+
+### Energy Saver Configuration
+- **Registry**: `HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings`
+- **Key**: `ShowBatteryFlyout = 0`
+- **Effect**: Optimizes Energy Saver behavior for desktop systems
+
+### Benefits for Desktop Users
+- ✅ **Uninterrupted Workflows**: No sleep during long compile/download tasks
+- ✅ **Maximum Performance**: CPU runs at full speed
+- ✅ **Disk Space**: Hibernation file removed (saves GBs)
+- ✅ **Remote Access**: System stays accessible for remote connections
+- ✅ **Background Tasks**: Downloads, backups, and scheduled tasks complete
+
+### Laptop Protection
+- 🔒 **Automatic Detection**: Skips power tweaks on laptops
+- 🔋 **Battery Preservation**: Maintains default power-saving settings
+- ⚠️ **Override**: Manual configuration possible if needed
+
+---
+
 ## Registry Changes
 
 ### Summary of All Registry Modifications
@@ -280,4 +341,4 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 
 ---
 
-*Last Updated: August-10-2025*
+*Last Updated: August-13-2025*

@@ -20,7 +20,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.0] - 2025-01-10
+## [1.1.0] - 2025-08-13
+### 🎉 Power Management Update
+
+#### Added
+- ⚡ **Power Management Optimization** (Desktop only)
+  - Automatic system type detection (desktop vs laptop)
+  - Hibernation disabled system-wide to free disk space
+  - High Performance power plan activation
+  - Display timeout set to 1 hour when plugged in
+  - Sleep and hibernation timeouts disabled for uninterrupted workflows
+  - Energy Saver optimization for desktop systems
+  - Smart laptop protection - skips power tweaks on portable systems
+
+#### Changed
+- 📝 **Documentation Updates**
+  - Added comprehensive power management section to TWEAKS.md
+  - Updated README.md with new power optimization features
+  - Enhanced CLAUDE.md with power management commands
+
+#### Technical Details
+- Uses WMI chassis type detection for system identification
+- Employs powercfg commands for power plan management
+- Includes proper error handling and user feedback
+- Integrates seamlessly with existing Windows tweaks workflow
+
+---
+
+## [1.0.0] - 2025-08-11
 ### 🎉 Initial Release
 
 #### Added
@@ -73,7 +100,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
-| 1.0.0 | 2025-01-10 | Initial release with 19 apps and Windows tweaks |
+| 1.0.0 | 2025-08-11 | Initial release with 19 apps and Windows tweaks |
 
 ---
 
