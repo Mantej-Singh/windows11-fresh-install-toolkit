@@ -70,9 +70,16 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
   - Set display timeout to 1 hour
   - Disable sleep and hibernation timeouts
   - Optimize Energy Saver settings
+- ✅ **System Enhancements** (Registry Tweaks)
+  - Verbose startup/shutdown status messages
+  - Disable search box suggestions for privacy
+  - Show seconds in system clock
 
 > [!NOTE]
 > **Desktop Only Feature:** Power management tweaks are automatically applied only on desktop systems and skipped on laptops to preserve battery life.
+
+> [!NOTE]
+> **ThioJoe Registry Tweaks:** Based on [ThioJoe's video](https://www.youtube.com/watch?v=V7AuHBZsOj0) "7 Windows Registry Tweaks to Make Your Life Easier" (Aug 13, 2025). This toolkit implements 3 of the 7 tweaks that I personally use and find most beneficial.
 
 [Full tweaks list →](docs/TWEAKS.md)
 
@@ -187,6 +194,7 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 
 - **FlipIt Screensaver** - [phaselden/FlipIt](https://github.com/phaselden/FlipIt) (CC0-1.0 License)
 - **Windows Sandbox Tools** - [ThioJoe/Windows-Sandbox-Tools](https://github.com/ThioJoe/Windows-Sandbox-Tools) (MIT License)
+- **Registry Tweaks** - [ThioJoe](https://www.youtube.com/@ThioJoe) - [7 Windows Registry Tweaks Video](https://www.youtube.com/watch?v=V7AuHBZsOj0) (Aug 13, 2025)
 - **ADB Platform Tools** - [Google](https://developer.android.com/tools/releases/platform-tools)
 - Inspired by frustration with Samsung 980 Pro SSD failures 😅
 

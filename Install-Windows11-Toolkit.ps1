@@ -432,6 +432,54 @@ if (-not $SkipWindowsTweaks -and $script:Config.windowsTweaks) {
             Write-Host "    ✅ Power management configured" -ForegroundColor Green
         }
         
+        # System Enhancements (Registry Tweaks)
+        if ($script:Config.windowsTweaks.systemEnhancements -and $script:Config.windowsTweaks.systemEnhancements.enabled) {
+            Write-Host "  Configuring System Enhancements..." -ForegroundColor Yellow
+            $sysSettings = $script:Config.windowsTweaks.systemEnhancements.settings
+            
+            # Verbose Status Messages (System-wide)
+            if ($sysSettings.verboseStatus) {
+                try {
+                    # Ensure the registry path exists
+                    $verbosePath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
+                    if (-not (Test-Path $verbosePath)) {
+                        New-Item -Path $verbosePath -Force | Out-Null
+                    }
+                    Set-ItemProperty -Path $verbosePath -Name "VerboseStatus" -Value 1 -Type DWord
+                    Write-Host "    ✅ Verbose status messages enabled" -ForegroundColor Green
+                } catch {
+                    Write-Host "    ⚠️ Failed to enable verbose status messages" -ForegroundColor Yellow
+                }
+            }
+            
+            # Disable Search Box Suggestions (User-specific)
+            if ($sysSettings.disableSearchBoxSuggestions) {
+                try {
+                    # Ensure the registry path exists
+                    $searchPath = "HKCU:\Software\Policies\Microsoft\Windows\Explorer"
+                    if (-not (Test-Path $searchPath)) {
+                        New-Item -Path $searchPath -Force | Out-Null
+                    }
+                    Set-ItemProperty -Path $searchPath -Name "DisableSearchBoxSuggestions" -Value 1 -Type DWord
+                    Write-Host "    ✅ Search box suggestions disabled" -ForegroundColor Green
+                } catch {
+                    Write-Host "    ⚠️ Failed to disable search box suggestions" -ForegroundColor Yellow
+                }
+            }
+            
+            # Show Seconds in System Clock (User-specific)
+            if ($sysSettings.showSecondsInClock) {
+                try {
+                    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Value 1 -Type DWord
+                    Write-Host "    ✅ Seconds in system clock enabled" -ForegroundColor Green
+                } catch {
+                    Write-Host "    ⚠️ Failed to enable seconds in system clock" -ForegroundColor Yellow
+                }
+            }
+            
+            Write-Host "    ✅ System enhancements configured" -ForegroundColor Green
+        }
+        
         # Restart Explorer if needed
         if ($script:Config.systemSettings.restartExplorer) {
             Write-Host "  Restarting Explorer..." -ForegroundColor Yellow
@@ -481,6 +529,9 @@ if (-not $SkipWindowsTweaks) {
     Write-Host "  • Privacy: Enhanced ✅" -ForegroundColor Green
     if ($script:Config.windowsTweaks.powerManagement -and $script:Config.windowsTweaks.powerManagement.enabled) {
         Write-Host "  • Power Management: Optimized ✅" -ForegroundColor Green
+    }
+    if ($script:Config.windowsTweaks.systemEnhancements -and $script:Config.windowsTweaks.systemEnhancements.enabled) {
+        Write-Host "  • System Enhancements: Applied ✅" -ForegroundColor Green
     }
 }
 

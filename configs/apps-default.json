@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "name": "Default Profile",
   "description": "Standard installation with 19 essential apps and Windows tweaks",
-  "lastUpdated": "2025-08-13",
+  "lastUpdated": "2025-08-14",
   
   "apps": {
     "winget": [
@@ -223,6 +223,16 @@
         "energySaver": false,
         "desktopOnly": true
       }
+    },
+    
+    "systemEnhancements": {
+      "enabled": true,
+      "settings": {
+        "verboseStatus": true,
+        "disableSearchBoxSuggestions": true,
+        "showSecondsInClock": true
+      },
+      "attribution": "ThioJoe - https://www.youtube.com/watch?v=V7AuHBZsOj0"
     }
   },
   

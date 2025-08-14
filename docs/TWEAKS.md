@@ -9,6 +9,7 @@ This document details all Windows 11 configuration changes made by the toolkit.
 - [Privacy Settings](#privacy-settings)
 - [Appearance Settings](#appearance-settings)
 - [Power Management Settings](#power-management-settings)
+- [System Enhancements](#system-enhancements)
 - [Registry Changes](#registry-changes)
 - [How to Revert](#how-to-revert)
 - [Manual Tweaks](#manual-tweaks)
@@ -232,6 +233,43 @@ This document details all Windows 11 configuration changes made by the toolkit.
 
 ---
 
+## System Enhancements
+
+> [!NOTE]
+> **Enhanced User Experience:** These registry modifications improve Windows 11 user experience with better system feedback and cleaner interface elements.
+
+> [!NOTE]
+> **Attribution:** Registry keys sourced from ThioJoe - https://www.youtube.com/watch?v=V7AuHBZsOj0
+
+### Verbose Status Messages
+- **Default**: Generic "Please wait" messages during startup/shutdown
+- **Modified**: Detailed status messages showing actual processes
+- **Registry**: `HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System`
+- **Key**: `VerboseStatus = 1`
+- **Scope**: System-wide (affects all users)
+- **Benefit**: Better transparency of what Windows is doing during boot/shutdown processes
+- **Example**: Shows "Applying user settings" instead of generic loading messages
+
+### Disable Search Box Suggestions
+- **Default**: Search suggestions enabled in Windows Search
+- **Modified**: Search suggestions disabled
+- **Registry**: `HKCU:\Software\Policies\Microsoft\Windows\Explorer`
+- **Key**: `DisableSearchBoxSuggestions = 1`
+- **Scope**: User-specific
+- **Benefit**: Improved privacy and cleaner search experience without web suggestions
+- **Note**: Registry path may be created if it doesn't exist
+
+### Show Seconds in System Clock
+- **Default**: Taskbar clock shows hours and minutes only
+- **Modified**: Taskbar clock displays seconds
+- **Registry**: `HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced`
+- **Key**: `ShowSecondsInSystemClock = 1`
+- **Scope**: User-specific
+- **Benefit**: More precise time display for users who need exact timing
+- **Visual Impact**: Clock changes from "10:30 AM" to "10:30:45 AM"
+
+---
+
 ## Registry Changes
 
 ### Summary of All Registry Modifications
@@ -254,6 +292,10 @@ This document details all Windows 11 configuration changes made by the toolkit.
 | **Appearance** |
 | Dark mode system | `HKCU:\...\Themes\Personalize` | `SystemUsesLightTheme` | `0` | DWORD |
 | Dark mode apps | `HKCU:\...\Themes\Personalize` | `AppsUseLightTheme` | `0` | DWORD |
+| **System Enhancements** |
+| Verbose status | `HKLM:\...\Policies\System` | `VerboseStatus` | `1` | DWORD |
+| No search suggestions | `HKCU:\...\Policies\...\Explorer` | `DisableSearchBoxSuggestions` | `1` | DWORD |
+| Show seconds in clock | `HKCU:\...\Explorer\Advanced` | `ShowSecondsInSystemClock` | `1` | DWORD |
 
 ---
 
@@ -284,6 +326,11 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 # Revert Dark Mode
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "SystemUsesLightTheme" -Value 1
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -Value 1
+
+# Revert System Enhancements
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "VerboseStatus" -Value 0
+Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Value 0
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Value 0
 
 # Restart Explorer
 Stop-Process -Name explorer -Force
