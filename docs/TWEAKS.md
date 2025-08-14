@@ -17,11 +17,13 @@ This document details all Windows 11 configuration changes made by the toolkit.
 
 ## Overview
 
+:::info Safety First
 The toolkit applies carefully selected Windows 11 tweaks to improve productivity, privacy, and user experience. All changes are:
 - ✅ **Reversible** - Can be undone manually
 - ✅ **User-specific** - Applied to current user only (except Cortana)
 - ✅ **Safe** - No system file modifications
 - ✅ **Documented** - Every change is logged
+:::
 
 ---
 
@@ -54,6 +56,10 @@ The toolkit applies carefully selected Windows 11 tweaks to improve productivity
 - **Registry**: `HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced`
 - **Key**: `ShowSuperHidden = 1`
 - **Benefit**: Full system visibility for power users
+
+:::caution Advanced Users Only
+Showing system files provides full visibility but can be dangerous for inexperienced users. System files should not be modified or deleted.
+:::
 
 ### Show Drive Letters First
 - **Default**: Drive letters after labels
@@ -135,6 +141,10 @@ The toolkit applies carefully selected Windows 11 tweaks to improve productivity
 - **Scope**: System-wide (requires admin)
 - **Benefit**: Privacy, resource savings
 
+:::danger System-Wide Change
+This is the only system-wide modification made by the toolkit. It affects all users and requires Administrator privileges.
+:::
+
 ### Disable Web Search in Start Menu
 - **Default**: Shows web results
 - **Modified**: Local results only
@@ -166,7 +176,9 @@ The toolkit applies carefully selected Windows 11 tweaks to improve productivity
 
 ## Power Management Settings
 
-**🖥️ Desktop Systems Only** - These settings are automatically skipped on laptops to preserve battery life.
+:::caution Desktop Only Feature
+**🖥️ Desktop Systems Only** - These settings are automatically skipped on laptops to preserve battery life. The system automatically detects your hardware type.
+:::
 
 ### System Type Detection
 - **Method**: WMI query for `Win32_SystemEnclosure.ChassisTypes`
@@ -251,9 +263,16 @@ The toolkit applies carefully selected Windows 11 tweaks to improve productivity
 
 ## How to Revert
 
+:::tip Easy Recovery
+The safest way to revert all changes is using the System Restore Point that's automatically created before making any modifications.
+:::
+
 ### Revert All Changes
-1. Use System Restore Point (created before changes)
+1. **Use System Restore Point (Recommended)** - Created before changes
 2. Or run these PowerShell commands:
+
+:::info Manual Revert Commands
+Run these PowerShell commands as Administrator to manually revert settings:
 
 ```powershell
 # Revert File Explorer
@@ -274,6 +293,7 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\P
 # Restart Explorer
 Stop-Process -Name explorer -Force
 ```
+:::
 
 ### Revert Specific Changes
 Each setting can be reverted individually by changing the registry value back to its default (shown in each section above).
@@ -315,29 +335,40 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 
 ## Safety Notes
 
+:::note System Safety
 - ✅ All changes are logged in the installation log file
 - ✅ System Restore Point created before changes
 - ✅ No system files are modified
 - ✅ All changes can be reverted
+:::
+
+:::caution Restart Requirements
 - ⚠️ Some changes require Explorer restart (done automatically)
 - ⚠️ Full effect may require system restart
+:::
 
 ---
 
 ## Troubleshooting
 
+:::info Common Issues
 ### Changes not visible
 - Restart Windows Explorer or reboot system
 - Check if running as Administrator (required for some settings)
+:::
 
+:::tip Customization
 ### Want different settings
 - Fork the repository
 - Modify `configs/apps-default.json`
 - Adjust the `windowsTweaks` section
+:::
 
+:::note Windows Updates
 ### Settings reset after Windows Update
 - Re-run the script with `-SkipApps` flag
 - Only Windows tweaks will be reapplied
+:::
 
 ---
 

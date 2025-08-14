@@ -23,11 +23,19 @@ A comprehensive PowerShell automation toolkit for Windows 11 fresh installations
 
 ## 🚀 Quick Start
 
+:::tip Pro Tip
+The one-line install is the fastest way to get started. It automatically downloads and runs the latest version.
+:::
+
 ### Option 1: One-Line Install (Recommended)
 Run in **Administrator PowerShell**:
 ```powershell
 irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolkit/main/Install-Windows11-Toolkit.ps1 | iex
 ```
+
+:::info Administrator Required
+This script **must** be run with Administrator privileges to install applications and modify system settings.
+:::
 
 ### Option 2: Download and Run
 1. Download `Install-Windows11-Toolkit.ps1`
@@ -65,14 +73,20 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
   - Disable sleep and hibernation timeouts
   - Optimize Energy Saver settings
 
+:::note Desktop Only Feature
+Power management tweaks are automatically applied only on desktop systems and skipped on laptops to preserve battery life.
+:::
+
 [Full tweaks list →](docs/TWEAKS.md)
 
 ## 📋 Requirements
 
-- Windows 11 (Windows 10 may work with modifications)
-- Administrator privileges
-- Internet connection
-- ~5GB free space for applications
+:::info System Requirements
+- **Windows 11** (Windows 10 may work with modifications)
+- **Administrator privileges** - Required for app installation and system tweaks
+- **Internet connection** - For downloading applications and configurations
+- **~5GB free space** - For applications and temporary files
+:::
 
 ## 🎯 Usage
 
@@ -109,10 +123,16 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 .\Install-Windows11-Toolkit.ps1 -Profile custom -CustomConfigUrl "https://mysite.com/config.json"
 ```
 ## 🧪 Testing in Windows Sandbox
+
+:::caution Sandbox Limitations
+Windows Sandbox doesn't include Microsoft Store or Winget by default. You'll need to install these first using ThioJoe's scripts.
+:::
+
 ### Prerequisites for Sandbox Testing
 
 Windows Sandbox doesn't include Microsoft Store or Winget by default. Thanks to [**ThioJoe**](https://github.com/ThioJoe) for creating scripts that enable these features in Sandbox without using any third-party APIs!
 
+:::info Required Setup Steps
 Before testing this toolkit in Windows Sandbox, you need to:
 
 1. **Install Winget and Microsoft Store** using ThioJoe's scripts:
@@ -139,10 +159,15 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 ```
 ### Notes for Sandbox Testing
 
+:::caution Sandbox Behavior
 - ⚠️ **Sandbox limitations**: Some features may not work exactly as in a full Windows installation
 - 💾 **No persistence**: All changes are lost when you close the Sandbox
-- 🔄 **Perfect for testing**: Test the script safely without affecting your main system
 - ⏱️ **Installation time**: First-time setup may take 5-10 minutes for Winget installation
+:::
+
+:::tip Safe Testing Environment
+🔄 **Perfect for testing**: Test the script safely without affecting your main system - ideal for trying configurations before running on your actual PC.
+:::
 
 ## 📦 Windows Sandbox Testing
 
@@ -197,7 +222,13 @@ MIT License - See [LICENSE](LICENSE) file
 
 ## ⚠️ Disclaimer
 
-Always create backups before running system modifications. Test in a VM if unsure.
+:::danger Safety First
+Always create backups before running system modifications. Test in a VM or Windows Sandbox if unsure.
+:::
+
+:::info Automatic Backup
+The script automatically creates a system restore point before making changes, but additional backups are always recommended.
+:::
 
 ---
 

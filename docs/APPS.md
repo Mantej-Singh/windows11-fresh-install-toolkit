@@ -14,7 +14,9 @@ This document provides detailed information about all applications included in t
 
 ## Default Profile Apps
 
-The default profile includes 19 essential applications for a complete Windows 11 setup.
+:::info Complete Setup
+The default profile includes 19 essential applications for a complete Windows 11 setup. These apps cover communication, productivity, development, and entertainment needs.
+:::
 
 ### Communication
 | Application | Package ID | Description | Size | License |
@@ -71,7 +73,9 @@ The default profile includes 19 essential applications for a complete Windows 11
 
 ## Minimal Profile Apps
 
-Essential applications only - perfect for lightweight installations.
+:::tip Lightweight Choice
+Essential applications only - perfect for lightweight installations, older hardware, or when you want just the bare essentials.
+:::
 
 | Application | Package ID | Why It's Essential |
 |------------|------------|-------------------|
@@ -101,7 +105,9 @@ Tools and utilities for software development (coming soon).
 
 ## Manual Utilities
 
-These utilities are downloaded and configured outside of winget.
+:::note Special Installation
+These utilities are downloaded and configured outside of winget because they require custom setup or aren't available in the Windows Package Manager.
+:::
 
 ### ADB Platform Tools
 - **Source**: Google Official
@@ -109,6 +115,10 @@ These utilities are downloaded and configured outside of winget.
 - **Installation Path**: `C:\Tweeks\Android\platform-tools`
 - **Configuration**: Automatically added to System PATH
 - **Purpose**: Android debugging, fastboot, device management
+
+:::caution Developer Tool
+ADB Platform Tools are primarily for Android developers and power users. They're automatically configured and added to your system PATH for command-line access.
+:::
 - **Components**:
   - `adb.exe` - Android Debug Bridge
   - `fastboot.exe` - Bootloader interface
@@ -126,6 +136,10 @@ These utilities are downloaded and configured outside of winget.
   - Customizable colors and size
   - 12/24 hour format
   - No Flash dependency
+
+:::tip Vintage Style
+FlipIt provides a beautiful retro flip-clock screensaver reminiscent of classic digital clocks. Fully customizable and works great on multi-monitor setups.
+:::
 
 ---
 
@@ -184,22 +198,32 @@ Yes! You can:
 3. Fork the repository and modify `apps-default.json`
 
 ### Are these apps free?
+
+:::info Licensing Overview
 Most apps are free or open source. Some notes:
 - **IDM**: Shareware (trial available)
-- **Windscribe**: Freemium (free tier available)
+- **Windscribe**: Freemium (free tier available)  
 - **Spotify**: Freemium (free with ads)
+:::
 
 ### How do I update these apps?
+
+:::tip Easy Updates
 Apps installed via winget can be updated with:
 ```powershell
 winget upgrade --all
 ```
+This command updates all installed winget packages to their latest versions.
+:::
 
 ### Can I add my own apps?
 Yes! Create a custom JSON configuration with your preferred apps. See the main README for examples.
 
 ### What if an app fails to install?
-The script continues with other apps and provides a summary at the end. You can manually install failed apps using winget or by downloading from the official website.
+
+:::note Failure Handling
+The script continues with other apps and provides a summary at the end. You can manually install failed apps using winget or by downloading from the official website. Common causes include network issues or app unavailability.
+:::
 
 ---
 
