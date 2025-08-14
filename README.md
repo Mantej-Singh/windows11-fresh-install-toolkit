@@ -233,8 +233,14 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Created by:** Me, over a weekend bc of below reasons 
+**Created by:** Me, over a weekend due to the following motivations
 
 **Motivation:** Two Samsung 980 Pro SSD failures in a row 💀 and [ThioJoe/Windows-Sandbox-Tools](https://github.com/ThioJoe/Windows-Sandbox-Tools )
 
-**Assistance:** ChatGPT5 for troubleshooting. Claude Opus 4.1 for technical guidance, grammar check, and editing. [Claude Code](https://claude.ai/code) for code-related queries, improvements, and PR assistance.
+**Assistance:**
+
+• ChatGPT/GPT-4 - Troubleshooting
+
+• Claude 3 Opus - Technical guidance, grammar check, and editing
+
+• [Claude Code](https://claude.ai/code) - Code-related queries, refactoring, features, and PR assistance
