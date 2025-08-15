@@ -303,8 +303,8 @@ MIT License - See [LICENSE](LICENSE) file
 
 **Assistance:**
 
-• ChatGPT/GPT-4 - Troubleshooting
+• ChatGPT5 - Troubleshooting
 
-• Claude 3 Opus - Technical guidance, grammar check, and editing
+• Claude 4.1 Opus - Technical guidance, grammar check, and editing
 
 • [Claude Code](https://claude.ai/code) - Code-related queries, refactoring, features, and PR assistance
