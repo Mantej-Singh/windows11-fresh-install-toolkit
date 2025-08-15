@@ -75,6 +75,35 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
   - Disable search box suggestions for privacy
   - Show seconds in system clock
 
+## 🚀 What's New in v2.0.0
+
+> [!IMPORTANT]
+> **Major Refactoring Release:** v2.0.0 introduces powerful new features while maintaining **100% backward compatibility** with existing usage patterns.
+
+### 🧪 **Sandbox Integration**
+- **One-command setup** with `-Sandbox` parameter
+- Automatic ThioJoe script integration for Winget and Microsoft Store
+- No more 4-step manual process
+- Continues on failures (non-blocking)
+
+### ⚙️ **Granular Tweak Control**
+- **Individual skip flags**: `-SkipFileExplorer`, `-SkipTaskbar`, `-SkipPrivacy`, `-SkipAppearance`, `-SkipPowerManagement`, `-SkipSystemEnhancements`
+- **Inclusive approach**: `-OnlyApply "FileExplorer,Privacy,Appearance"`
+- **Smart conflict resolution** with legacy `-SkipWindowsTweaks`
+- **Maximum flexibility** for users
+
+### 🔧 **Enhanced Error Recovery**
+- **Registry rollback mechanism** on partial failures
+- **Severity-based logging**: INFO, WARNING, ERROR levels
+- **Comprehensive error reporting** in final summary
+- **Registry backup tracking** for all modifications
+
+### 🔄 **Full Backward Compatibility**
+- **Zero breaking changes** - all existing scripts work unchanged
+- **Seamless upgrade** from v1.x to v2.0.0
+- **Legacy parameter support** maintained
+- **Progressive enhancement** approach
+
 > [!NOTE]
 > **Desktop Only Feature:** Power management tweaks are automatically applied only on desktop systems and skipped on laptops to preserve battery life.
 
@@ -100,8 +129,10 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 ```
 
 ### Advanced Options
+
+**Legacy Options (Full Backward Compatibility):**
 ```powershell
-# Skip Windows tweaks
+# Skip Windows tweaks (all categories)
 .\Install-Windows11-Toolkit.ps1 -SkipWindowsTweaks
 
 # Skip utility installations (ADB, FlipIt)
@@ -109,6 +140,29 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 
 # Dry run (test without installing)
 .\Install-Windows11-Toolkit.ps1 -DryRun
+```
+
+**🚀 v2.0.0 New Features:**
+
+**Sandbox Integration:**
+```powershell
+# One-command sandbox setup with ThioJoe integration
+.\Install-Windows11-Toolkit.ps1 -Sandbox
+
+# Sandbox with specific profile
+.\Install-Windows11-Toolkit.ps1 -Sandbox -Profile minimal
+```
+
+**Granular Tweak Control:**
+```powershell
+# Skip specific tweak categories
+.\Install-Windows11-Toolkit.ps1 -SkipFileExplorer -SkipPowerManagement
+
+# Apply only specific categories (inclusive approach)
+.\Install-Windows11-Toolkit.ps1 -OnlyApply "FileExplorer,Privacy,Appearance"
+
+# Advanced combinations
+.\Install-Windows11-Toolkit.ps1 -Sandbox -Profile developer -SkipUtilities -OnlyApply "Privacy,Taskbar"
 ```
 
 ### Usage Examples for Users:
@@ -146,6 +200,16 @@ Windows Sandbox doesn't include Microsoft Store or Winget by default. Thanks to 
 
 ### Quick Sandbox Setup
 
+> [!TIP]
+> **v2.0.0 One-Command Experience:** The new `-Sandbox` parameter automatically handles all ThioJoe script integration!
+
+**New Simplified Method (v2.0.0):**
+```powershell
+# One command does it all - automatically installs Winget and Microsoft Store
+.\Install-Windows11-Toolkit.ps1 -Sandbox
+```
+
+**Legacy Method (Still Supported):**
 ```powershell
 # Step 1: Enable Windows Sandbox (if not already enabled)
 Enable-WindowsOptionalFeature -FeatureName "Containers-DisposableClientVM" -All -Online

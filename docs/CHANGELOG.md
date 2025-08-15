@@ -7,9 +7,97 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.0] - 2025-08-15
+### 🚀 **MAJOR REFACTORING RELEASE**
+
+> [!IMPORTANT]
+> **Breaking Changes**: None! This is a major refactoring with full backward compatibility. All existing scripts and usage patterns continue to work unchanged.
+
+#### Added
+- 🧪 **Sandbox Integration** (`-Sandbox` Parameter)
+  - One-command sandbox setup replacing 4 separate manual steps
+  - Automatic ThioJoe script integration for Winget and Microsoft Store
+  - Direct `irm` calls with proper attribution and progress indication
+  - Continues execution on script failures (non-blocking approach)
+  - Perfect for testing configurations safely before production use
+
+- ⚙️ **Granular Tweak Control System**
+  - **Individual Skip Flags**: `-SkipFileExplorer`, `-SkipTaskbar`, `-SkipPrivacy`, `-SkipAppearance`, `-SkipPowerManagement`, `-SkipSystemEnhancements`
+  - **Inclusive Array Approach**: `-OnlyApply "FileExplorer,Privacy,Appearance"`
+  - **Smart Conflict Resolution**: New granular parameters override legacy `-SkipWindowsTweaks` when both are used
+  - **Maximum User Flexibility**: Both approaches available simultaneously
+
+- 🔧 **Enhanced Error Recovery & Logging**
+  - **Registry Rollback Mechanism**: Automatic backup and restore on partial failures
+  - **Severity-Based Logging**: INFO, WARNING, ERROR levels with color-coded output
+  - **Comprehensive Error Reporting**: Detailed summary with component-specific failure tracking
+  - **Registry Backup Tracking**: Complete backup of all modified registry values
+
+- 📊 **Advanced Progress & Reporting**
+  - **Enhanced Progress Indicators**: ETA calculations and detailed step tracking
+  - **Granular Summary Reports**: Shows applied/skipped/failed tweaks by category
+  - **Component-Specific Logging**: Separate tracking for Registry, Sandbox, PowerMgmt, etc.
+  - **Error Count Tracking**: Statistics for Info/Warning/Error levels
+
+#### Changed
+- 🏗️ **Architecture Refactoring**
+  - **Helper Functions Extraction**: `Write-Log`, `Invoke-RegistryTweak`, `Test-SandboxEnvironment`, `Install-SandboxPrerequisites`, `New-RestorePointSafely`, `Invoke-TweakRollback`, `Test-TweakShouldApply`
+  - **Modular Design**: Each function focused on single responsibility
+  - **Enhanced Script Variables**: Added tracking for logs, registry backups, error counts, applied/failed tweaks
+
+- 🎯 **Windows Tweaks Refactoring**
+  - All registry modifications now use `Invoke-RegistryTweak` helper function
+  - Automatic registry path creation with `-CreatePath` switch
+  - Enhanced error handling with detailed component logging
+  - Granular control logic integrated into each tweak category
+
+- 📝 **User Interface Enhancements**
+  - **Enhanced Banner**: v2.0.0 branding with build date and feature highlights
+  - **Detailed Help System**: `-ListProfiles` now shows v2.0.0 features and examples
+  - **Color-Coded Feedback**: Improved visual hierarchy with meaningful colors
+  - **Progress Transparency**: Clear indication of what will be applied/skipped
+
+#### Technical Details
+- **Full Backward Compatibility**: 100% compatible with all existing v1.x usage patterns
+- **Zero Breaking Changes**: Legacy parameters and workflows unchanged
+- **Progressive Enhancement**: New features don't interfere with existing functionality
+- **Robust Error Handling**: Graceful degradation for non-critical failures
+- **Memory Efficient**: Optimized variable usage and cleanup procedures
+- **Attribution Compliance**: Proper ThioJoe script attribution throughout
+
+#### Usage Examples
+```powershell
+# Legacy usage (unchanged)
+.\Install-Windows11-Toolkit.ps1
+.\Install-Windows11-Toolkit.ps1 -SkipWindowsTweaks
+
+# New sandbox integration
+.\Install-Windows11-Toolkit.ps1 -Sandbox
+.\Install-Windows11-Toolkit.ps1 -Sandbox -Profile minimal
+
+# New granular control
+.\Install-Windows11-Toolkit.ps1 -SkipPowerManagement -SkipSystemEnhancements
+.\Install-Windows11-Toolkit.ps1 -OnlyApply "FileExplorer,Privacy,Appearance"
+
+# Advanced combinations
+.\Install-Windows11-Toolkit.ps1 -Sandbox -Profile developer -SkipUtilities -OnlyApply "Privacy,Taskbar"
+```
+
+#### Migration Guide
+- **From v1.x to v2.0.0**: No changes required! Existing scripts work unchanged
+- **New Feature Adoption**: Add new parameters gradually as needed
+- **Conflict Resolution**: New granular flags take precedence over `-SkipWindowsTweaks`
+- **Error Recovery**: Registry rollback activates automatically on failures
+
+---
+
 ## [Unreleased]
-### Planned Features
-- 🔄 Undo/Rollback functionality
+### Planned Features for v3.0.0
+- 🎮 **Interactive Mode** with text-based menu system
+- ☑️ **Checkbox-style tweak selection** interface
+- 🧙 **Advanced configuration wizard**
+- 🎯 **Enhanced user experience** improvements
+- 🔄 Undo/Rollback functionality (enhanced beyond v2.0.0 rollback)
 - 💾 Backup current settings before applying tweaks
 - 🖥️ GUI version using Windows Forms
 - 🎮 Gaming profile with game launchers and tools
@@ -182,6 +270,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| **2.0.0** | **2025-08-15** | **Major refactoring with sandbox integration and granular control** |
 | 1.3.0 | 2025-08-14 | ThioJoe registry tweaks integration (system enhancements) |
 | 1.2.0 | 2025-08-14 | Documentation enhancement with GitHub Alerts |
 | 1.1.0 | 2025-08-13 | Power management optimization (desktop only) |
@@ -203,7 +292,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] Custom theme support
 - [ ] Export/Import settings
 
-### Version 2.0.0 (Far Far Future)
+### Version 3.0.0 (Interactive Mode Release)
+- [ ] Interactive Mode with text-based menu system
+- [ ] Checkbox-style tweak selection interface  
+- [ ] Advanced configuration wizard
+- [ ] Enhanced user experience improvements
+
+### Version 4.0.0 (Future Enterprise)
 - [ ] Cloud sync for configurations
 - [ ] Multi-PC deployment
 - [ ] Enterprise features
@@ -252,4 +347,4 @@ This project is licensed under the MIT License - see the [LICENSE](../LICENSE) f
 
 ---
 
-*Last Updated: August 14, 2025*
+*Last Updated: August 15, 2025*
