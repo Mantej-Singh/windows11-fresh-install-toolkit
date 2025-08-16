@@ -24,13 +24,18 @@ A comprehensive PowerShell automation toolkit for Windows 11 fresh installations
 ## 🚀 Quick Start
 
 > [!TIP]
-> **Pro Tip:** The one-line install is the fastest way to get started. It automatically downloads and runs the latest version.
+> **v2.0.1 Enhancement:** The one-line install now **automatically detects Windows Sandbox** and offers to enable sandbox features with user confirmation!
 
 ### Option 1: One-Line Install (Recommended)
 Run in **Administrator PowerShell**:
 ```powershell
 irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolkit/main/Install-Windows11-Toolkit.ps1 | iex
 ```
+
+**🤖 Auto-Detection Magic:** 
+- **In Windows Sandbox:** Automatically detects and asks if you want sandbox features enabled
+- **On Regular Windows:** Runs standard installation as usual
+- **No extra commands needed!**
 
 > [!IMPORTANT]
 > **Administrator Required:** This script **must** be run with Administrator privileges to install applications and modify system settings.
@@ -75,10 +80,18 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
   - Disable search box suggestions for privacy
   - Show seconds in system clock
 
-## 🚀 What's New in v2.0.0
+## 🚀 What's New in v2.0.1
 
 > [!IMPORTANT]
-> **Major Refactoring Release:** v2.0.0 introduces powerful new features while maintaining **100% backward compatibility** with existing usage patterns.
+> **Sandbox Auto-Detection Release:** v2.0.1 introduces **automatic sandbox detection** for the ultimate one-line installation experience!
+
+### 🤖 **Automatic Sandbox Detection** ⭐ **NEW**
+- **True one-line installation** - Just use the standard command!
+- **Smart detection** - Automatically recognizes Windows Sandbox environment
+- **User confirmation** - Asks permission before enabling sandbox features
+- **Zero configuration** - No parameters needed for sandbox use
+
+### v2.0.0 Features (Still Available)
 
 ### 🧪 **Sandbox Integration**
 - **One-command setup** with `-Sandbox` parameter
@@ -201,11 +214,17 @@ Windows Sandbox doesn't include Microsoft Store or Winget by default. Thanks to 
 ### Quick Sandbox Setup
 
 > [!TIP]
-> **v2.0.0 One-Command Experience:** The new `-Sandbox` parameter automatically handles all ThioJoe script integration!
+> **v2.0.1 Ultimate Simplicity:** Auto-detection means you just use the regular one-line command!
 
-**New Simplified Method (v2.0.0):**
+**🤖 Simplest Method (v2.0.1 - Auto-Detection):**
 ```powershell
-# One command does it all - automatically installs Winget and Microsoft Store
+# Just use the regular command - auto-detection handles everything!
+irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolkit/main/Install-Windows11-Toolkit.ps1 | iex
+```
+
+**Manual Method (v2.0.0 - Still Available):**
+```powershell
+# Explicitly enable sandbox mode
 .\Install-Windows11-Toolkit.ps1 -Sandbox
 ```
 

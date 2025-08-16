@@ -7,6 +7,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.1] - 2025-08-16
+### 🤖 **SANDBOX AUTO-DETECTION RELEASE**
+
+> [!IMPORTANT]
+> **Ultimate User Experience**: v2.0.1 achieves the holy grail of sandbox integration - **true one-line installation** with intelligent auto-detection!
+
+#### Added
+- 🤖 **Automatic Sandbox Detection**
+  - **Smart Environment Detection**: Automatically recognizes Windows Sandbox environments
+  - **User Confirmation Dialog**: Prompts user with clear explanation before enabling sandbox features
+  - **True One-Line Experience**: Standard `irm | iex` command now works perfectly in sandbox
+  - **Zero Configuration Required**: No parameters needed - just use the regular installation command
+  - **Graceful Fallback**: If user declines, continues with standard installation
+
+- 🎯 **Enhanced User Experience**
+  - **Clear Confirmation Prompt**: Explains what sandbox mode does before enabling
+  - **Visual Feedback**: Shows whether sandbox mode was enabled or declined
+  - **Comprehensive Logging**: Logs auto-detection events and user choices
+  - **Backward Compatibility**: Manual `-Sandbox` parameter still works as before
+
+#### Technical Implementation
+- **New Function**: `Confirm-SandboxMode()` - Provides user-friendly confirmation dialog
+- **Auto-Detection Logic**: Checks for sandbox environment early in execution flow
+- **Dynamic Parameter Setting**: Sets `$Sandbox = $true` based on user confirmation
+- **Enhanced Logging**: Records auto-detection events and user decisions
+
+#### User Experience Flow
+```
+User runs: irm https://raw.githubusercontent.com/.../Install-Windows11-Toolkit.ps1 | iex
+
+🧪 Windows Sandbox Environment Detected!
+   
+   This toolkit can automatically configure sandbox prerequisites:
+   • Install Winget via ThioJoe's scripts  
+   • Install Microsoft Store via ThioJoe's scripts
+   • Continue with enhanced sandbox mode
+   
+   Would you like to enable Sandbox Mode? [Y/N]: Y
+   ✅ Sandbox Mode enabled
+```
+
+#### Benefits
+- **Simplified Installation**: No need to remember special commands for sandbox
+- **Reduced User Error**: Eliminates confusion about sandbox-specific parameters  
+- **Better Adoption**: Makes sandbox testing more accessible to all users
+- **Maintains Choice**: Users can still decline sandbox features if desired
+
+---
+
 ## [2.0.0] - 2025-08-15
 ### 🚀 **MAJOR REFACTORING RELEASE**
 

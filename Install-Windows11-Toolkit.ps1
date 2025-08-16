@@ -1,12 +1,17 @@
 #Requires -RunAsAdministrator
 # ====================================================
 # Windows 11 Fresh Install Toolkit
-# Version: 2.0.0 - Major Refactoring Release
-# Build Date: August 15, 2025
+# Version: 2.0.1 - Sandbox Auto-Detection Release
+# Build Date: August 16, 2025
 # Author: Mantej Singh Dhanjal
 # GitHub: https://github.com/Mantej-Singh/windows11-fresh-install-toolkit
 # ====================================================
-# New in v2.0.0:
+# New in v2.0.1:
+# • Automatic Sandbox Detection with user confirmation
+# • True one-line sandbox installation experience
+# • Enhanced user experience for sandbox environments
+# ====================================================
+# v2.0.0 Features:
 # • Sandbox Integration (-Sandbox parameter)
 # • Granular Tweak Control (individual skip flags + OnlyApply arrays)
 # • Enhanced Error Recovery (rollback + severity logging)
@@ -159,6 +164,25 @@ function Test-SandboxEnvironment {
     }
 }
 
+function Confirm-SandboxMode {
+    Write-Host "`n🧪 " -ForegroundColor Magenta -NoNewline
+    Write-Host "Windows Sandbox Environment Detected!" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "   This toolkit can automatically configure sandbox prerequisites:" -ForegroundColor Cyan
+    Write-Host "   • Install Winget via ThioJoe's scripts" -ForegroundColor Gray  
+    Write-Host "   • Install Microsoft Store via ThioJoe's scripts" -ForegroundColor Gray
+    Write-Host "   • Continue with enhanced sandbox mode" -ForegroundColor Gray
+    Write-Host ""
+    
+    do {
+        Write-Host "   Would you like to enable Sandbox Mode? [Y/N]: " -ForegroundColor White -NoNewline
+        $response = Read-Host
+        $response = $response.Trim().ToUpper()
+    } while ($response -notin @('Y', 'YES', 'N', 'NO'))
+    
+    return $response -in @('Y', 'YES')
+}
+
 function Install-SandboxPrerequisites {
     Write-Host "`n[Sandbox Setup] Preparing Windows Sandbox Environment..." -ForegroundColor Cyan
     Write-Log -Level "INFO" -Message "Starting sandbox prerequisites installation" -Component "Sandbox"
@@ -285,10 +309,10 @@ function Test-TweakShouldApply {
 # ====================================================
 Write-Host @"
 ╔═══════════════════════════════════════════════╗
-║   🚀 Windows 11 Fresh Install Toolkit v2.0.0  ║
-║        Major Refactoring Release              ║
+║   🚀 Windows 11 Fresh Install Toolkit v2.0.1  ║
+║        Sandbox Auto-Detection Release         ║
 ║        Profile: $Profile                      ║
-║        Build: August 15, 2025                 ║
+║        Build: August 16, 2025                 ║
 ╚═══════════════════════════════════════════════╝
 "@ -ForegroundColor Cyan
 
@@ -300,7 +324,8 @@ if ($ListProfiles) {
     Write-Host "  • developer - Development tools and utilities" -ForegroundColor White
     Write-Host "  • custom    - Use your own config with -CustomConfigUrl parameter" -ForegroundColor White
     
-    Write-Host "`n🚀 v2.0.0 New Features:" -ForegroundColor Magenta
+    Write-Host "`n🚀 v2.0.1 New Features:" -ForegroundColor Magenta
+    Write-Host "  • 🤖 Automatic Sandbox Detection (no -Sandbox needed!)" -ForegroundColor Green
     Write-Host "  • 🧪 Sandbox Integration with -Sandbox parameter" -ForegroundColor Cyan
     Write-Host "  • ⚙️ Granular Tweak Control (individual categories)" -ForegroundColor Cyan
     Write-Host "  • 🔧 Enhanced Error Recovery with rollback" -ForegroundColor Cyan
@@ -330,6 +355,19 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Write-Host "❌ This script requires Administrator privileges!" -ForegroundColor Red
     Write-Host "Please run PowerShell as Administrator and try again." -ForegroundColor Yellow
     exit 1
+}
+
+# v2.0.1 Auto-Detection: Check for Windows Sandbox environment
+if (-not $Sandbox -and (Test-SandboxEnvironment)) {
+    Write-Log -Level "INFO" -Message "Windows Sandbox environment detected, prompting user for confirmation" -Component "Sandbox"
+    if (Confirm-SandboxMode) {
+        $Sandbox = $true
+        Write-Host "   ✅ Sandbox Mode enabled" -ForegroundColor Green
+        Write-Log -Level "INFO" -Message "User confirmed Sandbox mode - enabling sandbox features" -Component "Sandbox"
+    } else {
+        Write-Host "   ℹ️ Continuing with standard installation" -ForegroundColor Cyan
+        Write-Log -Level "INFO" -Message "User declined Sandbox mode - proceeding with standard installation" -Component "Sandbox"
+    }
 }
 
 # v2.0.0 Sandbox Integration

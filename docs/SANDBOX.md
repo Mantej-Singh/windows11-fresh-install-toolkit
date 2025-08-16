@@ -1,19 +1,31 @@
 # 🧪 Windows Sandbox Integration Guide
 
-*Last Updated: August 15, 2025*
+*Last Updated: August 16, 2025*
 
-This guide covers the Windows 11 Fresh Install Toolkit's integrated sandbox support, introduced in v2.0.0. The sandbox integration provides a safe testing environment with automatic setup of prerequisites.
+This guide covers the Windows 11 Fresh Install Toolkit's integrated sandbox support. The sandbox integration provides a safe testing environment with automatic setup of prerequisites, now featuring **automatic detection** in v2.0.1!
 
 ---
 
-## 🚀 Quick Start (v2.0.0)
+## 🚀 Quick Start (v2.0.1)
 
 > [!TIP]
-> **One-Command Experience:** The new `-Sandbox` parameter automatically handles all setup!
+> **🤖 Auto-Detection Magic:** v2.0.1 introduces **automatic sandbox detection** - just use the regular one-line command!
 
-### Simplest Method
+### 🤖 Auto-Detection Method (v2.0.1) ⭐ **RECOMMENDED**
 ```powershell
-# One command does everything automatically
+# Just use the regular command - auto-detection handles everything!
+irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolkit/main/Install-Windows11-Toolkit.ps1 | iex
+```
+
+**What happens automatically:**
+1. **Detection**: Script detects Windows Sandbox environment
+2. **Confirmation**: Asks "Would you like to enable Sandbox Mode? [Y/N]"
+3. **Setup**: If you choose "Y", automatically installs prerequisites
+4. **Installation**: Continues with full toolkit installation
+
+### Manual Method (v2.0.0) - Still Available
+```powershell
+# Explicitly enable sandbox mode
 .\Install-Windows11-Toolkit.ps1 -Sandbox
 ```
 
@@ -37,8 +49,28 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 
 ---
 
-## 🎯 What the `-Sandbox` Parameter Does
+## 🎯 How Sandbox Integration Works
 
+### v2.0.1 Auto-Detection Process
+When you run the regular installation command, the toolkit automatically:
+
+1. **Environment Detection**: Checks if running in Windows Sandbox
+2. **User Confirmation**: Shows this prompt if sandbox detected:
+   ```
+   🧪 Windows Sandbox Environment Detected!
+   
+      This toolkit can automatically configure sandbox prerequisites:
+      • Install Winget via ThioJoe's scripts  
+      • Install Microsoft Store via ThioJoe's scripts
+      • Continue with enhanced sandbox mode
+      
+      Would you like to enable Sandbox Mode? [Y/N]:
+   ```
+3. **User Choice**: 
+   - **"Y"**: Enables sandbox mode and continues with setup
+   - **"N"**: Continues with standard installation (no sandbox features)
+
+### Sandbox Mode Features (When Enabled)
 The sandbox integration automatically performs these steps:
 
 1. **Environment Detection**: Checks if running in Windows Sandbox
@@ -135,16 +167,18 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 
 ---
 
-## 📊 Comparison: v2.0.0 vs Legacy
+## 📊 Comparison: Methods Across Versions
 
-| Aspect | v2.0.0 Sandbox Mode | Legacy Manual Method |
-|--------|-------------------|-------------------|
-| **Commands Required** | 1 | 4 |
-| **Error Handling** | Automatic | Manual |
-| **Progress Tracking** | Built-in | None |
-| **Attribution** | Automatic | User responsibility |
-| **Complexity** | Simple | Complex |
-| **Flexibility** | High (combined with other params) | Limited |
+| Aspect | v2.0.1 Auto-Detection | v2.0.0 Sandbox Mode | Legacy Manual Method |
+|--------|--------------------|-------------------|-------------------|
+| **Commands Required** | 1 (standard) | 1 (with -Sandbox) | 4 |
+| **User Interaction** | Confirmation prompt | None | Manual setup |
+| **Error Handling** | Automatic | Automatic | Manual |
+| **Progress Tracking** | Built-in | Built-in | None |
+| **Attribution** | Automatic | Automatic | User responsibility |
+| **Complexity** | Simplest | Simple | Complex |
+| **User Experience** | Best (no parameters) | Good | Basic |
+| **Flexibility** | High | High | Limited |
 
 ---
 
