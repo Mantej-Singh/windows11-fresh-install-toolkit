@@ -221,6 +221,8 @@ Windows Sandbox doesn't include Microsoft Store or Winget by default. Thanks to 
 # Just use the regular command - auto-detection handles everything!
 irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolkit/main/Install-Windows11-Toolkit.ps1 | iex
 ```
+<img width="877" height="511" alt="image" src="https://github.com/user-attachments/assets/bbba0d48-4fc5-4436-8891-a0b051c904b0" />
+
 
 **Manual Method (v2.0.0 - Still Available):**
 ```powershell
