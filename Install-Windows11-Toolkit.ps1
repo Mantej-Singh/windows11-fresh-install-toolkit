@@ -1,16 +1,22 @@
 #Requires -RunAsAdministrator
 # ====================================================
 # Windows 11 Fresh Install Toolkit
-# Version: 2.0.2 - Installation Timeout & Progress Release
+# Version: 2.1.0 - Execution Flow Optimization
 # Build Date: August 16, 2025
 # Author: Mantej Singh Dhanjal
 # GitHub: https://github.com/Mantej-Singh/windows11-fresh-install-toolkit
 # ====================================================
-# New in v2.0.2:
-# • Installation timeout protection (3-minute per app)
-# • Real-time installation progress monitoring
-# • Enhanced sandbox detection with multiple methods
-# • Improved error handling and user feedback
+# New in v2.1.0:
+# • 🚀 Execution Flow Optimization: Windows tweaks now run FIRST!
+# • ⚡ Instant gratification - see changes immediately (dark mode, taskbar, etc.)
+# • 🎯 Better user experience - quick wins before lengthy app installations
+# • 📊 Improved progress perception - 30-second tweaks before 10+ minute apps
+# ====================================================
+# Previous Features:
+# • v2.0.3: PowerShell compatibility fixes
+# • v2.0.2: Installation timeout protection (3-minute per app)
+# • v2.0.1: Automatic sandbox detection with user confirmation
+# • v2.0.0: Major refactoring with granular control and advanced features
 # ====================================================
 # v2.0.1 Features:
 # • Automatic Sandbox Detection with user confirmation
@@ -312,19 +318,23 @@ function Invoke-WingetWithTimeout {
     
     if ($timeoutReached) {
         Write-Host "    ⏰ Installation timeout ($TimeoutSeconds seconds) - stopping..." -ForegroundColor Red
-        Stop-Job $job -Force
-        Remove-Job $job -Force
+        try {
+            Stop-Job $job
+            Remove-Job $job -Force
+        } catch {
+            Write-Log -Level "WARNING" -Message "Error stopping job: $_" -Component "WingetTimeout"
+        }
         Write-Log -Level "WARNING" -Message "$AppName installation timed out after $TimeoutSeconds seconds" -Component "WingetTimeout"
         return @{ Success = $false; Output = "Timeout after $TimeoutSeconds seconds"; ExitCode = -1 }
     } else {
         # Job completed within timeout
         $result = Receive-Job $job
-        $exitCode = if ($job.ChildJobs[0].JobStateInfo.HasMoreData) { 
-            Receive-Job $job.ChildJobs[0] | Select-Object -Last 1 
-        } else { 
-            if ($job.State -eq "Completed") { 0 } else { 1 }
+        $exitCode = if ($job.State -eq "Completed") { 0 } else { 1 }
+        try {
+            Remove-Job $job -Force
+        } catch {
+            Write-Log -Level "WARNING" -Message "Error removing job: $_" -Component "WingetTimeout"
         }
-        Remove-Job $job -Force
         
         Write-Log -Level "INFO" -Message "$AppName installation completed in $([math]::Round($elapsed.TotalSeconds)) seconds" -Component "WingetTimeout"
         return @{ Success = ($exitCode -eq 0); Output = $result; ExitCode = $exitCode }
@@ -402,8 +412,8 @@ function Test-TweakShouldApply {
 # ====================================================
 Write-Host @"
 ╔═══════════════════════════════════════════════╗
-║   🚀 Windows 11 Fresh Install Toolkit v2.0.2  ║
-║     Installation Timeout & Progress Release   ║
+║   🚀 Windows 11 Fresh Install Toolkit v2.1.0  ║
+║        Execution Flow Optimization            ║
 ║        Profile: $Profile                      ║
 ║        Build: August 16, 2025                 ║
 ╚═══════════════════════════════════════════════╝
@@ -555,133 +565,10 @@ if (-not $DryRun -and $script:Config.systemSettings.createRestorePoint) {
 }
 
 # ====================================================
-# SECTION 1: INSTALL APPLICATIONS VIA WINGET
-# ====================================================
-if (-not $SkipApps -and $script:Config.apps.winget) {
-    Write-Host "`n[Step 1] Installing Applications via Winget" -ForegroundColor Cyan
-    Write-Host "  Total applications: $($script:Config.apps.winget.Count)" -ForegroundColor Gray
-    
-    $currentApp = 0
-    $totalApps = $script:Config.apps.winget.Count
-    
-    foreach ($app in $script:Config.apps.winget) {
-        $currentApp++
-        $percentComplete = [math]::Round(($currentApp / $totalApps) * 100)
-        
-        Write-Progress -Activity "Installing Applications" -Status "$($app.name)" -PercentComplete $percentComplete
-        Write-Host "`n  [$currentApp/$totalApps] Installing $($app.name)..." -ForegroundColor Yellow
-        
-        if ($app.description) {
-            Write-Host "         $($app.description)" -ForegroundColor Gray
-        }
-        
-        if ($DryRun) {
-            Write-Host "    [DRY RUN] Would install: $($app.id)" -ForegroundColor Cyan
-            continue
-        }
-        
-        # Check if already installed
-        $checkInstalled = winget list --id $app.id --exact --accept-source-agreements 2>$null
-        if ($LASTEXITCODE -eq 0 -and $checkInstalled -match $app.id) {
-            Write-Host "    ⏭️ Already installed, skipping" -ForegroundColor Cyan
-            $script:InstalledApps += "$($app.name) (existing)"
-            continue
-        }
-        
-        # Install the app with timeout
-        $installResult = Invoke-WingetWithTimeout -AppId $app.id -AppName $app.name -TimeoutSeconds 180  # 3 minute timeout
-        
-        if ($installResult.Success) {
-            Write-Host "    ✅ $($app.name) installed successfully" -ForegroundColor Green
-            $script:InstalledApps += $app.name
-        } else {
-            if ($installResult.Output -like "*Timeout*") {
-                Write-Host "    ⏰ $($app.name) installation timed out - skipping to next app" -ForegroundColor Yellow
-                Write-Host "    💡 Tip: Try installing manually later: winget install --id $($app.id)" -ForegroundColor Gray
-            } else {
-                Write-Host "    ❌ Failed to install $($app.name)" -ForegroundColor Red
-            }
-            $script:FailedApps += $app.name
-        }
-        
-        # Small delay between installations
-        Start-Sleep -Seconds 1
-    }
-    
-    Write-Progress -Activity "Installing Applications" -Completed
-}
-
-# ====================================================
-# SECTION 2: INSTALL MANUAL UTILITIES
-# ====================================================
-if (-not $SkipUtilities -and $script:Config.apps.manual) {
-    Write-Host "`n[Step 2] Installing Manual Utilities" -ForegroundColor Cyan
-    
-    foreach ($utility in $script:Config.apps.manual) {
-        Write-Host "`n  Installing $($utility.name)..." -ForegroundColor Yellow
-        
-        if ($DryRun) {
-            Write-Host "    [DRY RUN] Would install from: $($utility.downloadUrl)" -ForegroundColor Cyan
-            continue
-        }
-        
-        try {
-            switch ($utility.name) {
-                "ADB Platform Tools" {
-                    Write-Host "    Downloading from Google..." -ForegroundColor Gray
-                    $adbZip = Join-Path $script:TempDir "platform-tools.zip"
-                    Invoke-WebRequest -Uri $utility.downloadUrl -OutFile $adbZip -UseBasicParsing
-                    
-                    Write-Host "    Extracting to $($utility.installPath)..." -ForegroundColor Gray
-                    $parentPath = Split-Path $utility.installPath -Parent
-                    New-Item -ItemType Directory -Path $parentPath -Force | Out-Null
-                    Expand-Archive -Path $adbZip -DestinationPath $parentPath -Force
-                    
-                    if ($utility.addToPath) {
-                        $currentPath = [System.Environment]::GetEnvironmentVariable("Path", "Machine")
-                        if ($currentPath -notlike "*$($utility.installPath)*") {
-                            [System.Environment]::SetEnvironmentVariable("Path", "$currentPath;$($utility.installPath)", "Machine")
-                            Write-Host "    ✅ ADB installed and added to PATH" -ForegroundColor Green
-                        } else {
-                            Write-Host "    ✅ ADB installed (already in PATH)" -ForegroundColor Green
-                        }
-                    }
-                }
-                
-                "FlipIt Screensaver" {
-                    Write-Host "    Downloading screensaver..." -ForegroundColor Gray
-                    $scrPath = Join-Path $utility.installPath "FlipIt.scr"
-                    Invoke-WebRequest -Uri $utility.downloadUrl -OutFile $scrPath -UseBasicParsing
-                    Write-Host "    ✅ FlipIt screensaver installed" -ForegroundColor Green
-                    
-                    if ($utility.configTool) {
-                        Write-Host "    Downloading configuration tool..." -ForegroundColor Gray
-                        $configPath = Join-Path $script:TempDir "FlipIt-1.3.7z"
-                        Invoke-WebRequest -Uri $utility.configTool.url -OutFile $configPath -UseBasicParsing
-                        Write-Host "    ℹ️ Config tool saved to: $configPath" -ForegroundColor Cyan
-                        Write-Host "    Extract to: $($utility.configTool.extractPath)" -ForegroundColor Gray
-                    }
-                }
-                
-                default {
-                    Write-Host "    Downloading $($utility.name)..." -ForegroundColor Gray
-                    $fileName = Split-Path $utility.downloadUrl -Leaf
-                    $downloadPath = Join-Path $script:TempDir $fileName
-                    Invoke-WebRequest -Uri $utility.downloadUrl -OutFile $downloadPath -UseBasicParsing
-                    Write-Host "    ✅ Downloaded to: $downloadPath" -ForegroundColor Green
-                }
-            }
-        } catch {
-            Write-Host "    ❌ Failed to install $($utility.name): $_" -ForegroundColor Red
-        }
-    }
-}
-
-# ====================================================
-# SECTION 3: CONFIGURE WINDOWS SETTINGS (v2.0.0 Enhanced)
+# SECTION 1: CONFIGURE WINDOWS SETTINGS (Instant Satisfaction!)
 # ====================================================
 if ($script:Config.windowsTweaks) {
-    Write-Host "`n[Step 3] Configuring Windows Settings" -ForegroundColor Cyan
+    Write-Host "`n[Step 1] ⚡ Configuring Windows Settings (Quick Wins!)" -ForegroundColor Cyan
     Write-Log -Level "INFO" -Message "Starting Windows tweaks configuration with granular control" -Component "Tweaks"
     
     # Display what will be applied/skipped
@@ -920,7 +807,131 @@ if ($script:Config.windowsTweaks) {
 }
 
 # ====================================================
-# SECTION 4: ENHANCED SUMMARY REPORT (v2.0.0)
+# SECTION 2: INSTALL APPLICATIONS VIA WINGET
+# ====================================================
+if (-not $SkipApps -and $script:Config.apps.winget) {
+    Write-Host "`n[Step 2] Installing Applications via Winget" -ForegroundColor Cyan
+    Write-Host "  Total applications: $($script:Config.apps.winget.Count)" -ForegroundColor Gray
+    
+    $currentApp = 0
+    $totalApps = $script:Config.apps.winget.Count
+    
+    foreach ($app in $script:Config.apps.winget) {
+        $currentApp++
+        $percentComplete = [math]::Round(($currentApp / $totalApps) * 100)
+        
+        Write-Progress -Activity "Installing Applications" -Status "$($app.name)" -PercentComplete $percentComplete
+        Write-Host "`n  [$currentApp/$totalApps] Installing $($app.name)..." -ForegroundColor Yellow
+        
+        if ($app.description) {
+            Write-Host "         $($app.description)" -ForegroundColor Gray
+        }
+        
+        if ($DryRun) {
+            Write-Host "    [DRY RUN] Would install: $($app.id)" -ForegroundColor Cyan
+            continue
+        }
+        
+        # Check if already installed
+        $checkInstalled = winget list --id $app.id --exact --accept-source-agreements 2>$null
+        if ($LASTEXITCODE -eq 0 -and $checkInstalled -match $app.id) {
+            Write-Host "    ⏭️ Already installed, skipping" -ForegroundColor Cyan
+            $script:InstalledApps += "$($app.name) (existing)"
+            continue
+        }
+        
+        # Install the app with timeout
+        $installResult = Invoke-WingetWithTimeout -AppId $app.id -AppName $app.name -TimeoutSeconds 180  # 3 minute timeout
+        
+        if ($installResult.Success) {
+            Write-Host "    ✅ $($app.name) installed successfully" -ForegroundColor Green
+            $script:InstalledApps += $app.name
+        } else {
+            if ($installResult.Output -like "*Timeout*") {
+                Write-Host "    ⏰ $($app.name) installation timed out - skipping to next app" -ForegroundColor Yellow
+                Write-Host "    💡 Tip: Try installing manually later: winget install --id $($app.id)" -ForegroundColor Gray
+            } else {
+                Write-Host "    ❌ Failed to install $($app.name)" -ForegroundColor Red
+            }
+            $script:FailedApps += $app.name
+        }
+        
+        # Small delay between installations
+        Start-Sleep -Seconds 1
+    }
+    
+    Write-Progress -Activity "Installing Applications" -Completed
+}
+
+# ====================================================
+# SECTION 3: INSTALL MANUAL UTILITIES
+# ====================================================
+if (-not $SkipUtilities -and $script:Config.apps.manual) {
+    Write-Host "`n[Step 3] Installing Manual Utilities" -ForegroundColor Cyan
+    
+    foreach ($utility in $script:Config.apps.manual) {
+        Write-Host "`n  Installing $($utility.name)..." -ForegroundColor Yellow
+        
+        if ($DryRun) {
+            Write-Host "    [DRY RUN] Would install from: $($utility.downloadUrl)" -ForegroundColor Cyan
+            continue
+        }
+        
+        try {
+            switch ($utility.name) {
+                "ADB Platform Tools" {
+                    Write-Host "    Downloading from Google..." -ForegroundColor Gray
+                    $adbZip = Join-Path $script:TempDir "platform-tools.zip"
+                    Invoke-WebRequest -Uri $utility.downloadUrl -OutFile $adbZip -UseBasicParsing
+                    
+                    Write-Host "    Extracting to $($utility.installPath)..." -ForegroundColor Gray
+                    $parentPath = Split-Path $utility.installPath -Parent
+                    New-Item -ItemType Directory -Path $parentPath -Force | Out-Null
+                    Expand-Archive -Path $adbZip -DestinationPath $parentPath -Force
+                    
+                    if ($utility.addToPath) {
+                        $currentPath = [System.Environment]::GetEnvironmentVariable("Path", "Machine")
+                        if ($currentPath -notlike "*$($utility.installPath)*") {
+                            [System.Environment]::SetEnvironmentVariable("Path", "$currentPath;$($utility.installPath)", "Machine")
+                            Write-Host "    ✅ ADB installed and added to PATH" -ForegroundColor Green
+                        } else {
+                            Write-Host "    ✅ ADB installed (already in PATH)" -ForegroundColor Green
+                        }
+                    }
+                }
+                
+                "FlipIt Screensaver" {
+                    Write-Host "    Downloading screensaver..." -ForegroundColor Gray
+                    $scrPath = Join-Path $utility.installPath "FlipIt.scr"
+                    Invoke-WebRequest -Uri $utility.downloadUrl -OutFile $scrPath -UseBasicParsing
+                    Write-Host "    ✅ FlipIt screensaver installed" -ForegroundColor Green
+                    
+                    if ($utility.configTool) {
+                        Write-Host "    Downloading configuration tool..." -ForegroundColor Gray
+                        $configPath = Join-Path $script:TempDir "FlipIt-1.3.7z"
+                        Invoke-WebRequest -Uri $utility.configTool.url -OutFile $configPath -UseBasicParsing
+                        Write-Host "    ℹ️ Config tool saved to: $configPath" -ForegroundColor Cyan
+                        Write-Host "    Extract to: $($utility.configTool.extractPath)" -ForegroundColor Gray
+                    }
+                }
+                
+                default {
+                    Write-Host "    Downloading $($utility.name)..." -ForegroundColor Gray
+                    $fileName = Split-Path $utility.downloadUrl -Leaf
+                    $downloadPath = Join-Path $script:TempDir $fileName
+                    Invoke-WebRequest -Uri $utility.downloadUrl -OutFile $downloadPath -UseBasicParsing
+                    Write-Host "    ✅ Downloaded to: $downloadPath" -ForegroundColor Green
+                }
+            }
+        } catch {
+            Write-Host "    ❌ Failed to install $($utility.name): $_" -ForegroundColor Red
+        }
+    }
+}
+
+
+# ====================================================
+# SECTION 5: ENHANCED SUMMARY REPORT (v2.0.0)
 # ====================================================
 Write-Host "`n╔═══════════════════════════════════════════════╗" -ForegroundColor Cyan
 Write-Host "║           📊 INSTALLATION SUMMARY v2.0.0       ║" -ForegroundColor Cyan

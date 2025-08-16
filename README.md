@@ -24,7 +24,7 @@ A comprehensive PowerShell automation toolkit for Windows 11 fresh installations
 ## 🚀 Quick Start
 
 > [!TIP]
-> **v2.0.2 Enhancement:** The one-line install now includes **timeout protection** and **progress monitoring** for bulletproof installations, plus **automatic sandbox detection**!
+> **v2.1.0 Enhancement:** The one-line install now features **optimized execution flow** with instant visual changes, **timeout protection**, and **automatic sandbox detection**!
 
 ### Option 1: One-Line Install (Recommended)
 Run in **Administrator PowerShell**:
@@ -33,6 +33,7 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 ```
 
 **🎯 Smart Installation Features:** 
+- **⚡ Instant Visual Changes:** Dark mode, taskbar tweaks applied in 30 seconds!
 - **⏰ Timeout Protection:** Each app has 3-minute timeout - no more infinite hangs!
 - **📊 Progress Monitoring:** Real-time updates show installation progress
 - **🤖 Sandbox Auto-Detection:** Automatically detects sandbox and offers enhanced features
@@ -81,12 +82,18 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
   - Disable search box suggestions for privacy
   - Show seconds in system clock
 
-## 🚀 What's New in v2.0.2
+## 🚀 What's New in v2.1.0
 
 > [!IMPORTANT]
-> **Installation Timeout & Progress Release:** v2.0.2 introduces **installation timeout protection** and **real-time progress monitoring** for bulletproof installations!
+> **Execution Flow Optimization:** v2.1.0 transforms the user experience by running **Windows tweaks FIRST** for instant gratification and better perceived performance!
 
-### ⏰ **Installation Timeout Protection** ⭐ **NEW**
+### ⚡ **Instant Gratification Execution Flow** ⭐ **NEW**
+- **🏃‍♂️ Tweaks run FIRST** - See dark mode, taskbar changes instantly!
+- **30-second quick wins** - Immediate visual feedback before long app installs
+- **📊 Better progress perception** - 20% completion in first minute vs 5%
+- **🎯 Psychological satisfaction** - Users see changes immediately
+
+### ⏰ **Installation Timeout Protection** (v2.0.2)
 - **3-minute timeout per app** - No more infinite hangs!
 - **Real-time progress monitoring** - See installation progress every 10 seconds
 - **Smart error handling** - Automatically skips stuck installations

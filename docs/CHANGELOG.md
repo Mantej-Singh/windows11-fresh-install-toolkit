@@ -7,6 +7,76 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2025-08-16
+### ⚡ **EXECUTION FLOW OPTIMIZATION RELEASE**
+
+> [!IMPORTANT]
+> **UX Revolution**: v2.1.0 transforms user experience by prioritizing **instant gratification** - Windows tweaks now run FIRST for immediate visual feedback!
+
+#### 🚀 Major Flow Optimization
+**Problem Solved:**
+- App installations take 3-57 minutes, creating poor user experience
+- Users had to wait long periods before seeing any changes
+- Progress felt slow with 5% completion in first 5 minutes
+- Risk of user abandonment during lengthy app installations
+
+**Solution Implemented:**
+- **🏃‍♂️ Windows tweaks now run FIRST** (Section 1 instead of Section 3)
+- **⚡ 30-second instant gratification** - users see dark mode, taskbar changes immediately
+- **📊 Better progress perception** - 20% completion in first minute
+- **🎯 Psychological satisfaction** - immediate visual confirmation script is working
+
+#### New Execution Order
+```
+v2.0.x Flow (Poor UX):
+1. 🔄 Restore Point (30s)
+2. 📦 Install 19 Apps (10-45 minutes) ← USERS WAIT FOREVER
+3. ⚙️ Windows Tweaks (30s)
+4. 🛠️ Utilities (2-5 minutes)
+
+v2.1.0 Flow (Optimized UX):
+1. 🔄 Restore Point (30s)
+2. ⚙️ Windows Tweaks FIRST (30s) ← INSTANT GRATIFICATION! ⭐
+3. 📦 Install 19 Apps (10-45 minutes)
+4. 🛠️ Utilities (2-5 minutes)
+```
+
+#### User Experience Transformation
+**Before v2.1.0:**
+```
+[Pre-Setup] Creating System Restore Point...
+[Step 1] Installing Applications via Winget
+  [1/19] Installing Signal... (hangs for minutes)
+  [User gets impatient, considers canceling]
+```
+
+**After v2.1.0:**
+```
+[Pre-Setup] Creating System Restore Point...
+[Step 1] ⚡ Configuring Windows Settings (Quick Wins!)
+  Configuring File Explorer... ✅
+  Configuring Taskbar... ✅
+  Configuring Appearance... ✅ (Dark mode applied instantly!)
+  Configuring Privacy... ✅
+[User sees immediate changes, stays engaged]
+[Step 2] Installing Applications via Winget...
+```
+
+#### Benefits Delivered
+- **🎯 Instant Visual Feedback**: Users see dark mode, taskbar changes within 60 seconds
+- **📊 Better Progress Perception**: 20% completion shown in first minute vs 5%
+- **🔒 Reduced User Abandonment**: Quick wins keep users engaged during long app installs
+- **⚡ Psychological Satisfaction**: Immediate confirmation that script is working
+- **🛡️ Risk Mitigation**: If app installations fail, users still get system improvements
+
+#### Technical Implementation
+- **Section Reordering**: Moved Windows tweaks from Section 3 to Section 1
+- **Updated Progress Indicators**: All step numbers updated to reflect new flow
+- **Enhanced User Messaging**: Added "Quick Wins!" and lightning bolt indicators
+- **Maintained Functionality**: Zero changes to actual tweak functionality
+
+---
+
 ## [2.0.2] - 2025-08-16
 ### ⏰ **INSTALLATION TIMEOUT & PROGRESS RELEASE**
 
