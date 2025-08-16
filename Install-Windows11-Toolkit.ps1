@@ -156,10 +156,38 @@ function Invoke-RegistryTweak {
 
 function Test-SandboxEnvironment {
     try {
-        # Check if running in Windows Sandbox
-        $productName = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
-        return $productName -like "*Sandbox*"
+        # Method 1: Check for WDAG (Windows Defender Application Guard) user account
+        if (Test-Path "C:\Users\WDAGUtilityAccount") { 
+            Write-Log -Level "INFO" -Message "Sandbox detected via WDAGUtilityAccount directory" -Component "Detection"
+            return $true 
+        }
+        
+        # Method 2: Check current username for WDAG account
+        if ($env:USERNAME -eq "WDAGUtilityAccount") { 
+            Write-Log -Level "INFO" -Message "Sandbox detected via WDAGUtilityAccount username" -Component "Detection"
+            return $true 
+        }
+        
+        # Method 3: Check for sandbox-specific registry keys
+        $sandboxKey = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName -ErrorAction SilentlyContinue
+        if ($sandboxKey.ProductName -like "*Sandbox*") {
+            Write-Log -Level "INFO" -Message "Sandbox detected via ProductName containing 'Sandbox'" -Component "Detection"
+            return $true
+        }
+        
+        # Method 4: Check for typical sandbox environment characteristics
+        # Sandbox typically has very limited user profiles and specific system characteristics
+        $userProfiles = Get-ChildItem "C:\Users" -Directory -ErrorAction SilentlyContinue
+        $hasWDAG = $userProfiles | Where-Object { $_.Name -eq "WDAGUtilityAccount" }
+        if ($hasWDAG) {
+            Write-Log -Level "INFO" -Message "Sandbox detected via WDAGUtilityAccount profile directory" -Component "Detection"
+            return $true
+        }
+        
+        Write-Log -Level "INFO" -Message "No sandbox environment detected" -Component "Detection"
+        return $false
     } catch {
+        Write-Log -Level "WARNING" -Message "Error during sandbox detection: $_" -Component "Detection"
         return $false
     }
 }
