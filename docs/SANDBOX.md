@@ -2,14 +2,14 @@
 
 *Last Updated: August 16, 2025*
 
-This guide covers the Windows 11 Fresh Install Toolkit's integrated sandbox support. The sandbox integration provides a safe testing environment with automatic setup of prerequisites, now featuring **automatic detection** in v2.0.1!
+This guide covers the Windows 11 Fresh Install Toolkit's integrated sandbox support. The sandbox integration provides a safe testing environment with automatic setup of prerequisites, featuring **automatic detection** (v2.0.1) and **timeout protection** (v2.0.2) for bulletproof sandbox installations!
 
 ---
 
-## 🚀 Quick Start (v2.0.1)
+## 🚀 Quick Start (v2.0.2)
 
 > [!TIP]
-> **🤖 Auto-Detection Magic:** v2.0.1 introduces **automatic sandbox detection** - just use the regular one-line command!
+> **🤖 Auto-Detection + ⏰ Timeout Magic:** v2.0.2 combines **automatic sandbox detection** with **installation timeout protection** - just use the regular one-line command for bulletproof sandbox testing!
 
 ### 🤖 Auto-Detection Method (v2.0.1) ⭐ **RECOMMENDED**
 ```powershell
@@ -122,7 +122,7 @@ graph TD
 - **No Persistence**: All changes discarded when sandbox closes
 - **Quick Reset**: Simply restart sandbox for clean slate
 
-### ⚠️ Sandbox Limitations
+### ⚠️ Sandbox Limitations & Solutions
 
 > [!CAUTION]
 > **Important Limitations to Consider:**
@@ -132,6 +132,9 @@ graph TD
 - **Memory Requirements**: Requires sufficient RAM for sandbox VM
 - **Network Restrictions**: Some network features may be limited
 - **Hardware Access**: Limited access to hardware features
+
+> [!TIP]
+> **v2.0.2 Timeout Protection:** Sandbox environments can have unreliable network connections that cause apps to hang. The new 3-minute timeout feature automatically handles these issues, ensuring your sandbox testing always completes successfully!
 
 ### 🔍 Troubleshooting
 

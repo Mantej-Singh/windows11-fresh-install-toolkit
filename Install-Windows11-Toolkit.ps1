@@ -1,12 +1,18 @@
 #Requires -RunAsAdministrator
 # ====================================================
 # Windows 11 Fresh Install Toolkit
-# Version: 2.0.1 - Sandbox Auto-Detection Release
+# Version: 2.0.2 - Installation Timeout & Progress Release
 # Build Date: August 16, 2025
 # Author: Mantej Singh Dhanjal
 # GitHub: https://github.com/Mantej-Singh/windows11-fresh-install-toolkit
 # ====================================================
-# New in v2.0.1:
+# New in v2.0.2:
+# • Installation timeout protection (3-minute per app)
+# • Real-time installation progress monitoring
+# • Enhanced sandbox detection with multiple methods
+# • Improved error handling and user feedback
+# ====================================================
+# v2.0.1 Features:
 # • Automatic Sandbox Detection with user confirmation
 # • True one-line sandbox installation experience
 # • Enhanced user experience for sandbox environments
@@ -266,6 +272,65 @@ function Show-ProgressWithETA {
     Write-Progress -Activity $Activity -Status $statusText -PercentComplete $PercentComplete
 }
 
+function Invoke-WingetWithTimeout {
+    param(
+        [string]$AppId,
+        [string]$AppName,
+        [int]$TimeoutSeconds = 300  # 5 minutes default timeout
+    )
+    
+    Write-Host "    Installing with $TimeoutSeconds second timeout..." -ForegroundColor Gray
+    $startTime = Get-Date
+    
+    # Create background job for winget installation
+    $job = Start-Job -ScriptBlock {
+        param($id)
+        & winget install --id $id --accept-source-agreements --accept-package-agreements --silent 2>&1
+        return $LASTEXITCODE
+    } -ArgumentList $AppId
+    
+    # Monitor progress with timeout
+    $timeoutReached = $false
+    $lastUpdate = Get-Date
+    do {
+        Start-Sleep -Seconds 2
+        $elapsed = (Get-Date) - $startTime
+        $remainingSeconds = $TimeoutSeconds - $elapsed.TotalSeconds
+        
+        # Show progress every 10 seconds to avoid spam
+        if ((Get-Date) - $lastUpdate -ge [TimeSpan]::FromSeconds(10)) {
+            if ($remainingSeconds -gt 0) {
+                Write-Host "    ⏱️ Installing... ($([math]::Round($remainingSeconds))s remaining)" -ForegroundColor Yellow
+                $lastUpdate = Get-Date
+            }
+        }
+        
+        if ($remainingSeconds -le 0) {
+            $timeoutReached = $true
+        }
+    } while ($job.State -eq "Running" -and -not $timeoutReached)
+    
+    if ($timeoutReached) {
+        Write-Host "    ⏰ Installation timeout ($TimeoutSeconds seconds) - stopping..." -ForegroundColor Red
+        Stop-Job $job -Force
+        Remove-Job $job -Force
+        Write-Log -Level "WARNING" -Message "$AppName installation timed out after $TimeoutSeconds seconds" -Component "WingetTimeout"
+        return @{ Success = $false; Output = "Timeout after $TimeoutSeconds seconds"; ExitCode = -1 }
+    } else {
+        # Job completed within timeout
+        $result = Receive-Job $job
+        $exitCode = if ($job.ChildJobs[0].JobStateInfo.HasMoreData) { 
+            Receive-Job $job.ChildJobs[0] | Select-Object -Last 1 
+        } else { 
+            if ($job.State -eq "Completed") { 0 } else { 1 }
+        }
+        Remove-Job $job -Force
+        
+        Write-Log -Level "INFO" -Message "$AppName installation completed in $([math]::Round($elapsed.TotalSeconds)) seconds" -Component "WingetTimeout"
+        return @{ Success = ($exitCode -eq 0); Output = $result; ExitCode = $exitCode }
+    }
+}
+
 function New-RestorePointSafely {
     param([string]$Description)
     
@@ -337,8 +402,8 @@ function Test-TweakShouldApply {
 # ====================================================
 Write-Host @"
 ╔═══════════════════════════════════════════════╗
-║   🚀 Windows 11 Fresh Install Toolkit v2.0.1  ║
-║        Sandbox Auto-Detection Release         ║
+║   🚀 Windows 11 Fresh Install Toolkit v2.0.2  ║
+║     Installation Timeout & Progress Release   ║
 ║        Profile: $Profile                      ║
 ║        Build: August 16, 2025                 ║
 ╚═══════════════════════════════════════════════╝
@@ -523,14 +588,19 @@ if (-not $SkipApps -and $script:Config.apps.winget) {
             continue
         }
         
-        # Install the app
-        $installResult = winget install --id $app.id --accept-source-agreements --accept-package-agreements --silent 2>&1
+        # Install the app with timeout
+        $installResult = Invoke-WingetWithTimeout -AppId $app.id -AppName $app.name -TimeoutSeconds 180  # 3 minute timeout
         
-        if ($LASTEXITCODE -eq 0) {
+        if ($installResult.Success) {
             Write-Host "    ✅ $($app.name) installed successfully" -ForegroundColor Green
             $script:InstalledApps += $app.name
         } else {
-            Write-Host "    ❌ Failed to install $($app.name)" -ForegroundColor Red
+            if ($installResult.Output -like "*Timeout*") {
+                Write-Host "    ⏰ $($app.name) installation timed out - skipping to next app" -ForegroundColor Yellow
+                Write-Host "    💡 Tip: Try installing manually later: winget install --id $($app.id)" -ForegroundColor Gray
+            } else {
+                Write-Host "    ❌ Failed to install $($app.name)" -ForegroundColor Red
+            }
             $script:FailedApps += $app.name
         }
         

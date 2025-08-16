@@ -24,7 +24,7 @@ A comprehensive PowerShell automation toolkit for Windows 11 fresh installations
 ## 🚀 Quick Start
 
 > [!TIP]
-> **v2.0.1 Enhancement:** The one-line install now **automatically detects Windows Sandbox** and offers to enable sandbox features with user confirmation!
+> **v2.0.2 Enhancement:** The one-line install now includes **timeout protection** and **progress monitoring** for bulletproof installations, plus **automatic sandbox detection**!
 
 ### Option 1: One-Line Install (Recommended)
 Run in **Administrator PowerShell**:
@@ -32,10 +32,11 @@ Run in **Administrator PowerShell**:
 irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolkit/main/Install-Windows11-Toolkit.ps1 | iex
 ```
 
-**🤖 Auto-Detection Magic:** 
-- **In Windows Sandbox:** Automatically detects and asks if you want sandbox features enabled
-- **On Regular Windows:** Runs standard installation as usual
-- **No extra commands needed!**
+**🎯 Smart Installation Features:** 
+- **⏰ Timeout Protection:** Each app has 3-minute timeout - no more infinite hangs!
+- **📊 Progress Monitoring:** Real-time updates show installation progress
+- **🤖 Sandbox Auto-Detection:** Automatically detects sandbox and offers enhanced features
+- **🛡️ Error Recovery:** Continues installation even if individual apps fail or timeout
 
 > [!IMPORTANT]
 > **Administrator Required:** This script **must** be run with Administrator privileges to install applications and modify system settings.
@@ -80,18 +81,24 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
   - Disable search box suggestions for privacy
   - Show seconds in system clock
 
-## 🚀 What's New in v2.0.1
+## 🚀 What's New in v2.0.2
 
 > [!IMPORTANT]
-> **Sandbox Auto-Detection Release:** v2.0.1 introduces **automatic sandbox detection** for the ultimate one-line installation experience!
+> **Installation Timeout & Progress Release:** v2.0.2 introduces **installation timeout protection** and **real-time progress monitoring** for bulletproof installations!
 
-### 🤖 **Automatic Sandbox Detection** ⭐ **NEW**
+### ⏰ **Installation Timeout Protection** ⭐ **NEW**
+- **3-minute timeout per app** - No more infinite hangs!
+- **Real-time progress monitoring** - See installation progress every 10 seconds
+- **Smart error handling** - Automatically skips stuck installations
+- **Background processing** - Uses PowerShell jobs for non-blocking execution
+
+### 🤖 **Automatic Sandbox Detection** (v2.0.1)
 - **True one-line installation** - Just use the standard command!
 - **Smart detection** - Automatically recognizes Windows Sandbox environment
 - **User confirmation** - Asks permission before enabling sandbox features
-- **Zero configuration** - No parameters needed for sandbox use
+- **Enhanced detection** - Multiple detection methods for reliability
 
-### v2.0.0 Features (Still Available)
+### v2.0.0 Features (Foundation)
 
 ### 🧪 **Sandbox Integration**
 - **One-command setup** with `-Sandbox` parameter
@@ -221,8 +228,6 @@ Windows Sandbox doesn't include Microsoft Store or Winget by default. Thanks to 
 # Just use the regular command - auto-detection handles everything!
 irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolkit/main/Install-Windows11-Toolkit.ps1 | iex
 ```
-<img width="877" height="511" alt="image" src="https://github.com/user-attachments/assets/bbba0d48-4fc5-4436-8891-a0b051c904b0" />
-
 
 **Manual Method (v2.0.0 - Still Available):**
 ```powershell

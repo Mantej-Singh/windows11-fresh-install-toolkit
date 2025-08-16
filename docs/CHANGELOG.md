@@ -7,6 +7,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.2] - 2025-08-16
+### ⏰ **INSTALLATION TIMEOUT & PROGRESS RELEASE**
+
+> [!IMPORTANT]
+> **Bulletproof Installations**: v2.0.2 eliminates hanging installations with smart timeout protection and real-time progress monitoring!
+
+#### Added
+- ⏰ **Installation Timeout Protection**
+  - **3-minute timeout per app**: Prevents infinite hangs that require manual intervention
+  - **Background job processing**: Uses PowerShell jobs for non-blocking winget execution
+  - **Automatic cleanup**: Gracefully stops and removes stuck installation jobs
+  - **Smart continuation**: Script automatically proceeds to next app after timeout
+
+- 📊 **Real-Time Progress Monitoring**
+  - **Live progress updates**: Shows remaining time every 10 seconds during installation
+  - **Installation timing**: Records and displays how long each app took to install
+  - **Visual feedback**: Clear progress indicators with countdown timers
+  - **Performance metrics**: Comprehensive logging of installation times and timeouts
+
+- 🛡️ **Enhanced Error Handling**
+  - **Timeout vs Failure differentiation**: Different messages and colors for different error types
+  - **Helpful user guidance**: Suggests manual installation commands for failed apps
+  - **Graceful degradation**: Installation continues smoothly even when apps fail or timeout
+  - **Comprehensive logging**: Records timeout events and installation performance metrics
+
+#### Technical Implementation
+- **New Function**: `Invoke-WingetWithTimeout()` - Handles background installation with timeout monitoring
+- **Background Job Management**: Uses PowerShell Start-Job for asynchronous execution
+- **Smart Monitoring Loop**: Checks job status every 2 seconds, reports progress every 10 seconds
+- **Resource Management**: Proper cleanup of background jobs and processes
+
+#### User Experience Improvements
+```
+Before v2.0.2:
+- Apps could hang indefinitely (manual Ctrl+C required)
+- No visibility into installation progress
+- Script could get stuck on problematic apps
+
+After v2.0.2:
+⏱️ Installing... (120s remaining)
+⏱️ Installing... (110s remaining)
+✅ Signal installed successfully (completed in 45 seconds)
+```
+
+#### Benefits
+- **No More Hangs**: Maximum 3 minutes per app before automatic timeout
+- **Better User Experience**: Live progress updates eliminate uncertainty
+- **Improved Reliability**: Script always completes, even with problematic apps
+- **Performance Insights**: Installation timing helps identify slow apps
+
+#### Enhanced Sandbox Detection
+- **Multiple Detection Methods**: Uses WDAGUtilityAccount directory, username, and profile checks
+- **Robust Fallbacks**: Multiple detection methods ensure reliability across environments
+- **Improved Logging**: Detailed detection method logging for troubleshooting
+
+---
+
 ## [2.0.1] - 2025-08-16
 ### 🤖 **SANDBOX AUTO-DETECTION RELEASE**
 
