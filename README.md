@@ -1,5 +1,5 @@
 # 🚀 Windows 11 Fresh Install Toolkit
-A comprehensive PowerShell automation toolkit for Windows 11 fresh installations. Born from the frustration of repeated SSD failures, this toolkit automatically installs essential applications via winget, configures Windows settings (File Explorer, Taskbar, Dark Mode), sets up development tools (ADB), and applies privacy tweaks. Features one-click installation of 19+ applications including Signal, Discord, VS Code, Steam, and more. Includes system optimizations like showing file extensions, disabling Cortana, and enabling dark mode. Perfect for quickly recovering from hardware failures or setting up new PCs with consistent configurations.
+A comprehensive PowerShell automation toolkit for Windows 11 fresh installations. Born from the frustration of repeated SSD failures, this toolkit automatically installs essential applications via winget, configures Windows settings (File Explorer, Taskbar, Dark Mode), sets up development tools (ADB), and applies privacy tweaks. Features one-click installation of 20+ applications including Signal, Discord, VS Code, Steam, Plex, and more. Includes system optimizations like showing file extensions, disabling Cortana, and enabling dark mode. Perfect for quickly recovering from hardware failures or setting up new PCs with consistent configurations.
 
 🎯 Use Cases: Fresh Windows installs | SSD failures | New PC setup | System recovery | Consistent multi-PC configuration
 
@@ -11,7 +11,7 @@ A comprehensive PowerShell automation toolkit for Windows 11 fresh installations
 ## ✨ Features
 
 - 🎯 **One-Click Installation** - Run one script to set up everything
-- 📦 **19+ Essential Apps** - Signal, Discord, VS Code, Steam, VLC, and more
+- 📦 **20+ Essential Apps** - Signal, Discord, VS Code, Steam, VLC, Plex, and more
 - ⚙️ **System Configuration** - File Explorer, Taskbar, Dark Mode
 - 🔒 **Privacy Tweaks** - Disable Cortana and telemetry
 - 🛠️ **Developer Tools** - ADB setup with PATH configuration
@@ -53,7 +53,7 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 | **Communication** | Signal, Discord |
 | **Development** | VS Code, PowerToys, ADB Tools |
 | **Productivity** | Ditto, TreeSize Free, IDM |
-| **Media** | VLC, Spotify, f.lux |
+| **Media** | VLC, Plex Media Server, Spotify, f.lux |
 | **Gaming** | Steam |
 | **Utilities** | 7-Zip, FanControl, qBittorrent |
 | **Cloud** | Google Drive, Chrome Remote Desktop |

@@ -138,6 +138,13 @@
         "category": "Media",
         "description": "Universal media player",
         "required": true
+      },
+      {
+        "id": "Plex.PlexMediaServer",
+        "name": "Plex Media Server",
+        "category": "Media",
+        "description": "Media server for streaming content",
+        "required": false
       }
     ],
     
@@ -230,7 +237,8 @@
       "settings": {
         "verboseStatus": true,
         "disableSearchBoxSuggestions": true,
-        "showSecondsInClock": true
+        "showSecondsInClock": true,
+        "enableClipboardHistory": true
       },
       "attribution": "ThioJoe - https://www.youtube.com/watch?v=V7AuHBZsOj0"
     }

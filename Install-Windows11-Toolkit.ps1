@@ -1,12 +1,18 @@
 #Requires -RunAsAdministrator
 # ====================================================
 # Windows 11 Fresh Install Toolkit
-# Version: 2.1.0 - Execution Flow Optimization
-# Build Date: August 16, 2025
+# Version: 2.2.0 - New App & System Enhancement Release
+# Build Date: August 19, 2025
 # Author: Mantej Singh Dhanjal
 # GitHub: https://github.com/Mantej-Singh/windows11-fresh-install-toolkit
 # ====================================================
-# New in v2.1.0:
+# New in v2.2.0:
+# • 🎬 Added Plex Media Server to default profile (20+ apps total)
+# • 📋 Enable Clipboard History feature (Win+V access to multiple clipboard items)
+# • 📚 Enhanced documentation with comprehensive usage instructions
+# • 🔧 Integrated clipboard history with existing SystemEnhancements registry tweaks
+# ====================================================
+# Previous in v2.1.0:
 # • 🚀 Execution Flow Optimization: Windows tweaks now run FIRST!
 # • ⚡ Instant gratification - see changes immediately (dark mode, taskbar, etc.)
 # • 🎯 Better user experience - quick wins before lengthy app installations
@@ -412,17 +418,17 @@ function Test-TweakShouldApply {
 # ====================================================
 Write-Host @"
 ╔═══════════════════════════════════════════════╗
-║   🚀 Windows 11 Fresh Install Toolkit v2.1.0  ║
-║        Execution Flow Optimization            ║
+║   🚀 Windows 11 Fresh Install Toolkit v2.2.0  ║
+║     New App & System Enhancement Release     ║
 ║        Profile: $Profile                      ║
-║        Build: August 16, 2025                 ║
+║        Build: August 19, 2025                 ║
 ╚═══════════════════════════════════════════════╝
 "@ -ForegroundColor Cyan
 
 # List available profiles if requested
 if ($ListProfiles) {
     Write-Host "`nAvailable Profiles:" -ForegroundColor Yellow
-    Write-Host "  • default   - Standard installation with 19 essential apps" -ForegroundColor White
+    Write-Host "  • default   - Standard installation with 20 essential apps" -ForegroundColor White
     Write-Host "  • minimal   - Lightweight installation with core apps only" -ForegroundColor White
     Write-Host "  • developer - Development tools and utilities" -ForegroundColor White
     Write-Host "  • custom    - Use your own config with -CustomConfigUrl parameter" -ForegroundColor White
@@ -556,7 +562,7 @@ try {
 # ====================================================
 if (-not $DryRun -and $script:Config.systemSettings.createRestorePoint) {
     Write-Host "`n[Pre-Setup] Creating System Restore Point..." -ForegroundColor Cyan
-    $restoreSuccess = New-RestorePointSafely -Description "Before Win11 Toolkit v2.0.0 - $Profile profile"
+    $restoreSuccess = New-RestorePointSafely -Description "Before Win11 Toolkit v2.2.0 - $Profile profile"
     if ($restoreSuccess) {
         Write-Host "  ✅ System Restore Point created" -ForegroundColor Green
     } else {
@@ -1035,7 +1041,7 @@ Write-Host "══════════════════════�
 
 .PARAMETER Profile
     Choose installation profile: default, minimal, developer, or custom
-    - default: 19 essential apps with full Windows tweaks
+    - default: 20 essential apps with full Windows tweaks
     - minimal: Core apps only (VS Code, VLC, Ditto, PowerToys, Google Drive)
     - developer: Development tools (Git, Node.js, Python, Docker, etc.)
     - custom: Use your own JSON configuration file

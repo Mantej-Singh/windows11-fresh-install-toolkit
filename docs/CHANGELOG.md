@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.0] - 2025-08-19
+### 📱 **NEW APPLICATION & SYSTEM ENHANCEMENT RELEASE**
+
+> [!IMPORTANT]
+> **Feature Additions**: v2.2.0 adds Plex Media Server to the default profile and enables clipboard history functionality for enhanced productivity!
+
+#### 🎬 Media Server Addition
+**New Application:**
+- **Plex Media Server** - Professional media streaming server
+- **Category**: Media (alongside VLC Media Player)  
+- **Profile**: Default profile only (optional installation)
+- **ID**: `Plex.PlexMediaServer`
+- **Total Apps**: Now **20+ applications** in default profile
+
+#### 📋 Clipboard History Enhancement  
+**New System Configuration:**
+- **Enable Clipboard History** - Access multiple clipboard items via Win+V
+- **Registry Path**: `HKCU:\Software\Microsoft\Clipboard`
+- **Key**: `EnableClipboardHistory = 1` (DWORD)
+- **Usage**: Press Win+V to access clipboard history panel
+- **Capacity**: Up to 25 items with 4MB size limit
+- **Privacy**: Local memory storage only (no cloud sync by default)
+
+#### 📚 Documentation Updates
+**Enhanced Documentation:**
+- **README.md**: Updated app count to 20+, added Plex to media category
+- **TWEAKS.md**: Added comprehensive clipboard history documentation
+- **Technical Details**: Registry implementation, usage instructions, revert commands
+- **User Education**: Clear explanation of clipboard memory vs. file storage
+
+#### 🔧 Technical Implementation  
+**System Enhancements Category:**
+- Integrated with existing SystemEnhancements registry tweaks
+- Follows established `Invoke-RegistryTweak` pattern
+- Maintains architectural consistency with other user-specific tweaks
+- Added to apps-default.json configuration with proper categorization
+
+---
+
 ## [2.1.0] - 2025-08-16
 ### ⚡ **EXECUTION FLOW OPTIMIZATION RELEASE**
 
@@ -523,4 +562,4 @@ This project is licensed under the MIT License - see the [LICENSE](../LICENSE) f
 
 ---
 
-*Last Updated: August 15, 2025*
+*Last Updated: August 19, 2025*
