@@ -83,54 +83,36 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
   - Show seconds in system clock
   - Enable clipboard history (Win+V to access)
 
-## 🚀 What's New in v2.1.0
+## 🚀 What's New in v2.2.0
 
 > [!IMPORTANT]
-> **Execution Flow Optimization:** v2.1.0 transforms the user experience by running **Windows tweaks FIRST** for instant gratification and better perceived performance!
+> **New App & System Enhancement Release:** v2.2.0 adds Plex Media Server to the default profile and enhances productivity with clipboard history functionality!
 
-### ⚡ **Instant Gratification Execution Flow** ⭐ **NEW**
-- **🏃‍♂️ Tweaks run FIRST** - See dark mode, taskbar changes instantly!
-- **30-second quick wins** - Immediate visual feedback before long app installs
-- **📊 Better progress perception** - 20% completion in first minute vs 5%
-- **🎯 Psychological satisfaction** - Users see changes immediately
+### 🎬 **Plex Media Server Addition** ⭐ **NEW**
+- **Professional media streaming server** - Host and stream your media library
+- **Added to default profile** - Now **20+ essential applications** total
+- **Media category placement** - Positioned alongside VLC Media Player
+- **Optional installation** - Set as non-required for user choice
+- **Perfect for home servers** - Stream to any device on your network
 
-### ⏰ **Installation Timeout Protection** (v2.0.2)
-- **3-minute timeout per app** - No more infinite hangs!
-- **Real-time progress monitoring** - See installation progress every 10 seconds
-- **Smart error handling** - Automatically skips stuck installations
-- **Background processing** - Uses PowerShell jobs for non-blocking execution
+### 📋 **Clipboard History Enhancement** ⭐ **NEW**
+- **Win+V access** - Access multiple clipboard items instantly
+- **Up to 25 items** - Store text, images, and files with 4MB limit
+- **Local storage only** - Privacy-focused with no cloud sync by default
+- **System integration** - Seamlessly integrated with existing SystemEnhancements
+- **Complete documentation** - Usage instructions and technical details included
 
-### 🤖 **Automatic Sandbox Detection** (v2.0.1)
-- **True one-line installation** - Just use the standard command!
-- **Smart detection** - Automatically recognizes Windows Sandbox environment
-- **User confirmation** - Asks permission before enabling sandbox features
-- **Enhanced detection** - Multiple detection methods for reliability
+### 📚 **Comprehensive Documentation Updates**
+- **Updated app counts** - All references now show 20+ applications
+- **Enhanced TWEAKS.md** - Complete clipboard history implementation guide
+- **Detailed CHANGELOG** - Full v2.2.0 release documentation
+- **Version consistency** - Updated to August 19, 2025 across all files
 
-### v2.0.0 Features (Foundation)
-
-### 🧪 **Sandbox Integration**
-- **One-command setup** with `-Sandbox` parameter
-- Automatic ThioJoe script integration for Winget and Microsoft Store
-- No more 4-step manual process
-- Continues on failures (non-blocking)
-
-### ⚙️ **Granular Tweak Control**
-- **Individual skip flags**: `-SkipFileExplorer`, `-SkipTaskbar`, `-SkipPrivacy`, `-SkipAppearance`, `-SkipPowerManagement`, `-SkipSystemEnhancements`
-- **Inclusive approach**: `-OnlyApply "FileExplorer,Privacy,Appearance"`
-- **Smart conflict resolution** with legacy `-SkipWindowsTweaks`
-- **Maximum flexibility** for users
-
-### 🔧 **Enhanced Error Recovery**
-- **Registry rollback mechanism** on partial failures
-- **Severity-based logging**: INFO, WARNING, ERROR levels
-- **Comprehensive error reporting** in final summary
-- **Registry backup tracking** for all modifications
-
-### 🔄 **Full Backward Compatibility**
-- **Zero breaking changes** - all existing scripts work unchanged
-- **Seamless upgrade** from v1.x to v2.0.0
-- **Legacy parameter support** maintained
-- **Progressive enhancement** approach
+### 🔧 **Technical Implementation**
+- **Registry integration** - `HKCU:\Software\Microsoft\Clipboard\EnableClipboardHistory`
+- **Architectural consistency** - Follows established `Invoke-RegistryTweak` pattern
+- **User education** - Clear explanation of clipboard memory vs. file storage
+- **Revert capability** - Complete rollback instructions included
 
 > [!NOTE]
 > **Desktop Only Feature:** Power management tweaks are automatically applied only on desktop systems and skipped on laptops to preserve battery life.
@@ -289,6 +271,29 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 - [ ] GUI version
 - [ ] Windows 10 support
 - [ ] Export/Import configurations
+
+## 📜 Previous Releases
+
+### 🚀 **v2.1.0 - Execution Flow Optimization** (August 16, 2025)
+- **⚡ Instant Gratification Flow** - Windows tweaks run FIRST for immediate visual feedback
+- **📊 Better Progress Perception** - 20% completion in first minute vs 5%
+- **🎯 Psychological Satisfaction** - Users see dark mode, taskbar changes instantly
+
+### 🔧 **v2.0.2 - Installation Timeout Protection** (August 16, 2025)
+- **3-minute timeout per app** - No more infinite hangs
+- **Real-time progress monitoring** - Installation progress every 10 seconds
+- **Background processing** - PowerShell jobs for non-blocking execution
+
+### 🤖 **v2.0.1 - Automatic Sandbox Detection** (August 16, 2025)
+- **True one-line installation** - Auto-detects Windows Sandbox environment
+- **Smart detection** - Multiple detection methods for reliability
+- **User confirmation** - Permission-based sandbox feature activation
+
+### 🏗️ **v2.0.0 - Major Refactoring** (August 15, 2025)
+- **Sandbox Integration** - One-command setup with ThioJoe scripts
+- **Granular Tweak Control** - Individual skip flags and inclusive arrays
+- **Enhanced Error Recovery** - Registry rollback and severity logging
+- **Full Backward Compatibility** - Zero breaking changes
 
 ## 🙏 Credits & Attribution
 
