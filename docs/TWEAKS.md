@@ -268,6 +268,18 @@ This document details all Windows 11 configuration changes made by the toolkit.
 - **Benefit**: More precise time display for users who need exact timing
 - **Visual Impact**: Clock changes from "10:30 AM" to "10:30:45 AM"
 
+### Enable Clipboard History
+- **Default**: Clipboard history disabled (Windows default for privacy)
+- **Modified**: Clipboard history enabled for multiple clipboard items
+- **Registry**: `HKCU:\Software\Microsoft\Clipboard`
+- **Key**: `EnableClipboardHistory = 1`
+- **Scope**: User-specific
+- **Benefit**: Access multiple clipboard items with Win+V keyboard shortcut
+- **Usage**: Press Win+V to open clipboard history panel
+- **Capacity**: Stores up to 25 items with 4MB size limit
+- **Privacy**: Data stored locally only (no cloud sync by default)
+- **Note**: The clipboard isn't a file. Its contents are stored in the computer's memory. To use its contents, simply go to the program you want to use it in, click the place where you want it to be put, and press Ctrl+V (paste). [Learn more](https://learn.microsoft.com/en-us/answers/questions/2771653/where-is-clipboard-file-on-window-10-how-to-access?forum=windows-all&referrer=answers)
+
 ---
 
 ## Registry Changes
@@ -296,6 +308,7 @@ This document details all Windows 11 configuration changes made by the toolkit.
 | Verbose status | `HKLM:\...\Policies\System` | `VerboseStatus` | `1` | DWORD |
 | No search suggestions | `HKCU:\...\Policies\...\Explorer` | `DisableSearchBoxSuggestions` | `1` | DWORD |
 | Show seconds in clock | `HKCU:\...\Explorer\Advanced` | `ShowSecondsInSystemClock` | `1` | DWORD |
+| Enable clipboard history | `HKCU:\Software\Microsoft\Clipboard` | `EnableClipboardHistory` | `1` | DWORD |
 
 ---
 
@@ -331,6 +344,7 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\P
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "VerboseStatus" -Value 0
 Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Value 0
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Value 0
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Clipboard" -Name "EnableClipboardHistory" -Value 0
 
 # Restart Explorer
 Stop-Process -Name explorer -Force
@@ -370,6 +384,9 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 
 # Show seconds in clock
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Value 1
+
+# Enable clipboard history (Win+V)
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Clipboard" -Name "EnableClipboardHistory" -Value 1
 ```
 
 ---

@@ -81,6 +81,7 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
   - Verbose startup/shutdown status messages
   - Disable search box suggestions for privacy
   - Show seconds in system clock
+  - Enable clipboard history (Win+V to access)
 
 ## 🚀 What's New in v2.1.0
 

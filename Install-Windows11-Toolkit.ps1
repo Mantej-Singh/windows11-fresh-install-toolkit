@@ -790,6 +790,11 @@ if ($script:Config.windowsTweaks) {
                 Invoke-RegistryTweak -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Value 1 -Type "DWord" -Description "Show seconds in system clock"
             }
             
+            # Enable Clipboard History (User-specific)
+            if ($sysSettings.enableClipboardHistory) {
+                Invoke-RegistryTweak -Path "HKCU:\Software\Microsoft\Clipboard" -Name "EnableClipboardHistory" -Value 1 -Type "DWord" -Description "Enable clipboard history (Win+V)" -CreatePath
+            }
+            
             Write-Host "    ✅ System enhancements configured" -ForegroundColor Green
         } elseif (Test-TweakShouldApply -TweakCategory "SystemEnhancements" -eq $false) {
             Write-Host "  ⏭️ Skipping System Enhancements tweaks (granular control)" -ForegroundColor Yellow
