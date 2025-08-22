@@ -1,12 +1,18 @@
 #Requires -RunAsAdministrator
 # ====================================================
 # Windows 11 Fresh Install Toolkit
-# Version: 2.2.0 - New App & System Enhancement Release
-# Build Date: August 19, 2025
+# Version: 2.3.0 - Privacy Enhancement Release
+# Build Date: August 22, 2025
 # Author: Mantej Singh Dhanjal
 # GitHub: https://github.com/Mantej-Singh/windows11-fresh-install-toolkit
 # ====================================================
-# New in v2.2.0:
+# New in v2.3.0:
+# • 🛡️ Comprehensive Telemetry Control - Disable Windows data collection and telemetry
+# • 📊 7 Registry Modifications - Core telemetry, diagnostics, CEIP, error reporting, app telemetry, advertising ID, feedback
+# • 🎯 Granular Control - New -SkipTelemetry parameter and "Telemetry" category support
+# • 📚 Dedicated TELEMETRY.md Documentation - Complete guide with registry details and revert procedures
+# ====================================================
+# Previous in v2.2.0:
 # • 🎬 Added Plex Media Server to default profile (20+ apps total)
 # • 📋 Enable Clipboard History feature (Win+V access to multiple clipboard items)
 # • 📚 Enhanced documentation with comprehensive usage instructions
@@ -56,9 +62,10 @@ param(
     [switch]$SkipAppearance = $false,
     [switch]$SkipPowerManagement = $false,
     [switch]$SkipSystemEnhancements = $false,
+    [switch]$SkipTelemetry = $false,
     
     # Granular Tweak Control - Inclusive Array Approach
-    [ValidateSet("FileExplorer", "Taskbar", "Privacy", "Appearance", "PowerManagement", "SystemEnhancements")]
+    [ValidateSet("FileExplorer", "Taskbar", "Privacy", "Appearance", "PowerManagement", "SystemEnhancements", "Telemetry")]
     [string[]]$OnlyApply = @()
 )
 
@@ -392,7 +399,7 @@ function Test-TweakShouldApply {
     # If SkipWindowsTweaks is true and no granular controls are used, skip all
     if ($SkipWindowsTweaks -and $OnlyApply.Count -eq 0 -and 
         -not $SkipFileExplorer -and -not $SkipTaskbar -and -not $SkipPrivacy -and 
-        -not $SkipAppearance -and -not $SkipPowerManagement -and -not $SkipSystemEnhancements) {
+        -not $SkipAppearance -and -not $SkipPowerManagement -and -not $SkipSystemEnhancements -and -not $SkipTelemetry) {
         return $false
     }
     
@@ -409,6 +416,7 @@ function Test-TweakShouldApply {
         "Appearance" { return -not $SkipAppearance }
         "PowerManagement" { return -not $SkipPowerManagement }
         "SystemEnhancements" { return -not $SkipSystemEnhancements }
+        "Telemetry" { return -not $SkipTelemetry }
         default { return $true }
     }
 }
@@ -453,8 +461,12 @@ if ($ListProfiles) {
     Write-Host "  .\Install-Windows11-Toolkit.ps1 -SkipPowerManagement -SkipSystemEnhancements" -ForegroundColor Gray
     Write-Host "  .\Install-Windows11-Toolkit.ps1 -OnlyApply FileExplorer,Privacy,Appearance" -ForegroundColor Gray
     
+    Write-Host "`n  # v2.3.0 Telemetry Control" -ForegroundColor Gray
+    Write-Host "  .\Install-Windows11-Toolkit.ps1 -SkipTelemetry" -ForegroundColor Gray
+    Write-Host "  .\Install-Windows11-Toolkit.ps1 -OnlyApply Telemetry,Privacy" -ForegroundColor Gray
+    
     Write-Host "`n  # v2.0.0 Advanced Combinations" -ForegroundColor Gray
-    Write-Host "  .\Install-Windows11-Toolkit.ps1 -Sandbox -Profile developer -SkipUtilities -OnlyApply Privacy,Taskbar" -ForegroundColor Gray
+    Write-Host "  .\Install-Windows11-Toolkit.ps1 -Sandbox -Profile developer -SkipUtilities -OnlyApply Privacy,Telemetry" -ForegroundColor Gray
     
     exit 0
 }
@@ -804,6 +816,51 @@ if ($script:Config.windowsTweaks) {
             Write-Host "    ✅ System enhancements configured" -ForegroundColor Green
         } elseif (Test-TweakShouldApply -TweakCategory "SystemEnhancements" -eq $false) {
             Write-Host "  ⏭️ Skipping System Enhancements tweaks (granular control)" -ForegroundColor Yellow
+        }
+        
+        # Telemetry Control (v2.3.0 New Feature)
+        if ($script:Config.windowsTweaks.telemetry -and $script:Config.windowsTweaks.telemetry.enabled -and (Test-TweakShouldApply -TweakCategory "Telemetry")) {
+            Write-Host "  Configuring Telemetry Control..." -ForegroundColor Yellow
+            $telSettings = $script:Config.windowsTweaks.telemetry.settings
+            
+            # Core Data Collection (System-wide)
+            if ($telSettings.disableDataCollection) {
+                Invoke-RegistryTweak -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "AllowTelemetry" -Value 0 -Type "DWord" -Description "Disable Windows telemetry collection" -CreatePath
+            }
+            
+            # Diagnostic Data Collection (System-wide)
+            if ($telSettings.disableDiagnosticData) {
+                Invoke-RegistryTweak -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Value 0 -Type "DWord" -Description "Disable diagnostic data collection" -CreatePath
+            }
+            
+            # Customer Experience Improvement Program (System-wide)
+            if ($telSettings.disableCEIP) {
+                Invoke-RegistryTweak -Path "HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows" -Name "CEIPEnable" -Value 0 -Type "DWord" -Description "Disable Customer Experience Improvement Program" -CreatePath
+            }
+            
+            # Windows Error Reporting (System-wide)
+            if ($telSettings.disableErrorReporting) {
+                Invoke-RegistryTweak -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" -Name "Disabled" -Value 1 -Type "DWord" -Description "Disable Windows Error Reporting" -CreatePath
+            }
+            
+            # Application Impact Telemetry (System-wide)
+            if ($telSettings.disableAppTelemetry) {
+                Invoke-RegistryTweak -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat" -Name "AITEnable" -Value 0 -Type "DWord" -Description "Disable application compatibility telemetry" -CreatePath
+            }
+            
+            # Advertising ID (User-specific)
+            if ($telSettings.disableAdvertisingId) {
+                Invoke-RegistryTweak -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -Name "Enabled" -Value 0 -Type "DWord" -Description "Disable advertising ID" -CreatePath
+            }
+            
+            # Feedback Notifications (User-specific)
+            if ($telSettings.disableFeedbackNotifications) {
+                Invoke-RegistryTweak -Path "HKCU:\Software\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Value 0 -Type "DWord" -Description "Disable feedback notifications" -CreatePath
+            }
+            
+            Write-Host "    ✅ Telemetry control configured" -ForegroundColor Green
+        } elseif (Test-TweakShouldApply -TweakCategory "Telemetry" -eq $false) {
+            Write-Host "  ⏭️ Skipping Telemetry control (granular control)" -ForegroundColor Yellow
         }
         
         # Restart Explorer if needed

@@ -1,6 +1,6 @@
 # 🧪 Windows Sandbox Integration Guide
 
-*Last Updated: August 16, 2025*
+*Last Updated: August 22, 2025*
 
 This guide covers the Windows 11 Fresh Install Toolkit's integrated sandbox support. The sandbox integration provides a safe testing environment with automatic setup of prerequisites, featuring **automatic detection** (v2.0.1) and **timeout protection** (v2.0.2) for bulletproof sandbox installations!
 
@@ -276,4 +276,4 @@ ThioJoe's Windows Sandbox Tools are separately licensed under the MIT License.
 
 ---
 
-*Last Updated: August 15, 2025*
+*Last Updated: August 22, 2025*

@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "name": "Default Profile",
-  "description": "Standard installation with 19 essential apps and Windows tweaks",
-  "lastUpdated": "2025-08-14",
+  "description": "Standard installation with 20+ essential apps and comprehensive Windows tweaks including telemetry control",
+  "lastUpdated": "2025-08-22",
   
   "apps": {
     "winget": [
@@ -241,6 +241,19 @@
         "enableClipboardHistory": true
       },
       "attribution": "ThioJoe - https://www.youtube.com/watch?v=V7AuHBZsOj0"
+    },
+    
+    "telemetry": {
+      "enabled": true,
+      "settings": {
+        "disableDataCollection": true,
+        "disableDiagnosticData": true,
+        "disableCEIP": true,
+        "disableErrorReporting": true,
+        "disableAppTelemetry": true,
+        "disableAdvertisingId": true,
+        "disableFeedbackNotifications": true
+      }
     }
   },
   

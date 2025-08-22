@@ -231,4 +231,4 @@ Yes! Create a custom JSON configuration with your preferred apps. See the main R
 
 ---
 
-*Last Updated: August-19-2025*
+*Last Updated: August 22, 2025*

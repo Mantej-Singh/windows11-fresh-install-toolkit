@@ -83,36 +83,36 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
   - Show seconds in system clock
   - Enable clipboard history (Win+V to access)
 
-## 🚀 What's New in v2.2.0
+## 🚀 What's New in v2.3.0
 
 > [!IMPORTANT]
-> **New App & System Enhancement Release:** v2.2.0 adds Plex Media Server to the default profile and enhances productivity with clipboard history functionality!
+> **Privacy Enhancement Release:** v2.3.0 introduces comprehensive telemetry control with 7 registry modifications to disable Windows data collection and enhance your privacy!
 
-### 🎬 **Plex Media Server Addition** ⭐ **NEW**
-- **Professional media streaming server** - Host and stream your media library
-- **Added to default profile** - Now **20+ essential applications** total
-- **Media category placement** - Positioned alongside VLC Media Player
-- **Optional installation** - Set as non-required for user choice
-- **Perfect for home servers** - Stream to any device on your network
+### 🛡️ **Comprehensive Telemetry Control** ⭐ **NEW**
+- **Complete privacy protection** - Disable Windows data collection and telemetry transmission
+- **7 Registry modifications** - Core telemetry, diagnostics, CEIP, error reporting, app telemetry, advertising ID, feedback notifications
+- **Dedicated category** - New `telemetry` section in windowsTweaks for organized control
+- **System-wide and user-specific** - Comprehensive coverage of all telemetry systems
+- **Professional documentation** - Complete guide in `/docs/TELEMETRY.md` with detailed explanations
 
-### 📋 **Clipboard History Enhancement** ⭐ **NEW**
-- **Win+V access** - Access multiple clipboard items instantly
-- **Up to 25 items** - Store text, images, and files with 4MB limit
-- **Local storage only** - Privacy-focused with no cloud sync by default
-- **System integration** - Seamlessly integrated with existing SystemEnhancements
-- **Complete documentation** - Usage instructions and technical details included
+### 🎯 **Advanced Granular Control** ⭐ **NEW**
+- **Individual skip flag** - New `-SkipTelemetry` parameter for selective application
+- **Inclusive array support** - Use `-OnlyApply "Telemetry,Privacy"` for targeted privacy enhancement
+- **Backward compatibility** - All existing usage patterns continue to work unchanged
+- **Enhanced help examples** - Updated documentation with telemetry control examples
 
-### 📚 **Comprehensive Documentation Updates**
-- **Updated app counts** - All references now show 20+ applications
-- **Enhanced TWEAKS.md** - Complete clipboard history implementation guide
-- **Detailed CHANGELOG** - Full v2.2.0 release documentation
-- **Version consistency** - Updated to August 19, 2025 across all files
+### 📊 **Registry Modifications Applied**
+- **Core Data Collection** - `HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection`
+- **Diagnostic Data** - `HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection`
+- **CEIP Program** - `HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows`
+- **Error Reporting** - `HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting`
+- **App Telemetry** - `HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat`
+- **Advertising ID** - `HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo`
+- **Feedback Notifications** - `HKCU:\Software\Microsoft\Siuf\Rules`
 
-### 🔧 **Technical Implementation**
-- **Registry integration** - `HKCU:\Software\Microsoft\Clipboard\EnableClipboardHistory`
-- **Architectural consistency** - Follows established `Invoke-RegistryTweak` pattern
-- **User education** - Clear explanation of clipboard memory vs. file storage
-- **Revert capability** - Complete rollback instructions included
+
+> [!TIP]
+> **Quick Privacy Setup:** Use `.\Install-Windows11-Toolkit.ps1 -OnlyApply "Telemetry,Privacy"` to apply only privacy-related modifications without installing applications or other tweaks.
 
 > [!NOTE]
 > **Desktop Only Feature:** Power management tweaks are automatically applied only on desktop systems and skipped on laptops to preserve battery life.
@@ -274,6 +274,12 @@ irm https://raw.githubusercontent.com/Mantej-Singh/windows11-fresh-install-toolk
 
 ## 📜 Previous Releases
 
+### 🎬 **v2.2.0 - New App & System Enhancement Release** (August 19, 2025)
+- **Professional media streaming** - Added Plex Media Server to default profile (20+ apps total)
+- **📋 Clipboard History** - Win+V functionality with SystemEnhancements integration
+- **📚 Documentation excellence** - Comprehensive updates with GitHub Alerts standard
+- **🔧 Registry implementation** - `HKCU:\Software\Microsoft\Clipboard\EnableClipboardHistory`
+
 ### 🚀 **v2.1.0 - Execution Flow Optimization** (August 16, 2025)
 - **⚡ Instant Gratification Flow** - Windows tweaks run FIRST for immediate visual feedback
 - **📊 Better Progress Perception** - 20% completion in first minute vs 5%
@@ -349,3 +355,8 @@ MIT License - See [LICENSE](LICENSE) file
 • Claude 4.1 Opus - Technical guidance, grammar check, and editing
 
 • [Claude Code](https://claude.ai/code) - Code-related queries, refactoring, features, and PR assistance
+
+---
+
+**Last Updated:** August 22, 2025  
+**Version:** v2.3.0 - Privacy Enhancement Release

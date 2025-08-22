@@ -7,6 +7,105 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.3.0] - 2025-08-22
+### 🛡️ **PRIVACY ENHANCEMENT RELEASE**
+
+> [!IMPORTANT]
+> **Major Privacy Feature**: v2.3.0 introduces comprehensive telemetry control with 7 registry modifications to disable Windows data collection and enhance user privacy protection!
+
+#### 🛡️ Comprehensive Telemetry Control (NEW)
+**New Telemetry Category:**
+- **Dedicated telemetry section** - New `telemetry` category in windowsTweaks configuration
+- **7 Registry modifications** - Complete coverage of Windows telemetry systems
+- **System-wide and user-specific** - Comprehensive privacy protection approach
+- **Professional implementation** - Follows established `Invoke-RegistryTweak` architecture
+- **Safety first** - Automatic system restore point creation before modifications
+
+**Registry Modifications Applied:**
+1. **Core Data Collection** - `HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection\AllowTelemetry = 0`
+2. **Diagnostic Data** - `HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection\AllowTelemetry = 0`
+3. **CEIP Program** - `HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows\CEIPEnable = 0`
+4. **Error Reporting** - `HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\Disabled = 1`
+5. **App Telemetry** - `HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppCompat\AITEnable = 0`
+6. **Advertising ID** - `HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo\Enabled = 0`
+7. **Feedback Notifications** - `HKCU:\Software\Microsoft\Siuf\Rules\NumberOfSIUFInPeriod = 0`
+
+#### 🎯 Advanced Granular Control (NEW)
+**Parameter Enhancements:**
+- **New `-SkipTelemetry` parameter** - Individual control over telemetry modifications
+- **Enhanced ValidateSet** - Added "Telemetry" to `-OnlyApply` array options
+- **Backward compatibility** - All existing usage patterns continue unchanged
+- **Intelligent logic** - Updated `Test-TweakShouldApply` function for telemetry category
+
+**Usage Examples:**
+```powershell
+# Skip telemetry while applying other tweaks
+.\Install-Windows11-Toolkit.ps1 -SkipTelemetry
+
+# Apply only telemetry and privacy modifications
+.\Install-Windows11-Toolkit.ps1 -OnlyApply "Telemetry,Privacy"
+
+# Complete privacy setup
+.\Install-Windows11-Toolkit.ps1 -OnlyApply "Telemetry,Privacy" -SkipApps
+```
+
+#### 📚 Comprehensive Documentation (NEW)
+**New Documentation:**
+- **`/docs/TELEMETRY.md`** - Complete telemetry control guide with detailed explanations
+- **Registry reference** - All 7 registry paths with descriptions and purposes
+- **Revert procedures** - Complete rollback instructions for all modifications
+- **Verification commands** - PowerShell commands to verify telemetry settings
+- **Safety guidance** - System restore point usage and enterprise considerations
+
+**Enhanced GitHub Alerts:**
+- **Important alerts** - Critical privacy and safety information
+- **Warning alerts** - Registry modification warnings and system restore reminders
+- **Caution alerts** - Enterprise environment and Group Policy considerations
+- **Note alerts** - Technical details and additional information
+- **Tip alerts** - Best practices and usage recommendations
+
+#### 🔧 Technical Implementation
+**Architecture Enhancements:**
+- **JSON configuration** - New `telemetry` section in apps-default.json
+- **PowerShell implementation** - Added telemetry control in main script after SystemEnhancements
+- **Function updates** - Enhanced `Test-TweakShouldApply` with telemetry category support
+- **Parameter validation** - Updated granular control logic to include SkipTelemetry
+- **Help system** - Added telemetry examples to script help documentation
+
+**Configuration Schema:**
+```json
+"telemetry": {
+  "enabled": true,
+  "settings": {
+    "disableDataCollection": true,
+    "disableDiagnosticData": true,
+    "disableCEIP": true,
+    "disableErrorReporting": true,
+    "disableAppTelemetry": true,
+    "disableAdvertisingId": true,
+    "disableFeedbackNotifications": true
+  }
+}
+```
+
+#### 📊 Privacy Impact Analysis
+**Data Collection Disabled:**
+- **Basic telemetry** - System usage patterns and performance metrics
+- **Diagnostic data** - Detailed system diagnostics and error information
+- **CEIP participation** - Customer Experience Improvement Program data
+- **Error reporting** - Automatic crash and error report transmission
+- **App compatibility** - Application usage and compatibility telemetry
+- **Advertising targeting** - Personalized advertising identifier system
+- **Feedback requests** - Windows feedback notification prompts
+
+> [!WARNING]
+> **Enterprise Consideration**: Some telemetry settings may be managed by Group Policy in enterprise environments. Registry changes may not take effect if overridden by organizational policies.
+
+> [!TIP]
+> **Recommended Testing**: Use Windows Sandbox to test telemetry modifications: `.\Install-Windows11-Toolkit.ps1 -Sandbox -OnlyApply "Telemetry"`
+
+---
+
 ## [2.2.0] - 2025-08-19
 ### 📱 **NEW APPLICATION & SYSTEM ENHANCEMENT RELEASE**
 
